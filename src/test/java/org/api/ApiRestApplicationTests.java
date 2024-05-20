@@ -121,6 +121,7 @@ class ApiRestApplicationTests {
         mockMvc.perform(put("/api/compras/{idCompra}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.editionError").value("The number of edited tickets can't be more than 20"));
     }
 

@@ -8,9 +8,7 @@ import org.api.validations.ValidateCompra;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
-import org.api.exception.InvalidCompraException;
 import org.api.validations.ValidateEditionCompra;
-import org.api.exception.InvalidEditedCompraException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,39 +31,23 @@ public class CompraServiceImpl implements ICompraService{
     @Override
     @Transactional
     public ResponseEntity<Compra> nuevaCompra(Compra compra) {
-        try {
-            ValidateCompra.validateCompra(compra);
-            return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
-        } catch (InvalidCompraException e) {
-            throw e;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        ValidateCompra.validateCompra(compra);
+        return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
     }
 
     @Override
     @Transactional
     public ResponseEntity<Compra> editarCompra(Long id, Compra compra) {
+        ValidateEditionCompra.validateEditionCompra(compra);
         Compra compraEditada = iCompraDAO.findById(id).orElse(null);
-        try {
-            if (compraEditada != null) {
-                ValidateEditionCompra.validateEditionCompra(compra);
-                compraEditada.setNombre_cliente(compra.getNombre_cliente());
-                if (compra.getNumero_entradas() != null) {
-                    compraEditada.setNumero_entradas(compra.getNumero_entradas());
-                }
-                if (compra.getFecha_compra() != null) {
-                    compraEditada.setFecha_compra(compra.getFecha_compra());
-                }
-                return new ResponseEntity<>(iCompraDAO.save(compraEditada), HttpStatus.OK);
-            }
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        } catch (InvalidEditedCompraException e) {
-            throw e;
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        assert compraEditada != null;
+        if (compra.getNumero_entradas() != null) {
+            compraEditada.setNumero_entradas(compra.getNumero_entradas());
         }
+        if (compra.getFecha_compra() != null) {
+            compraEditada.setFecha_compra(compra.getFecha_compra());
+        }
+        return new ResponseEntity<>(iCompraDAO.save(compraEditada), HttpStatus.OK);
     }
 
     @Override

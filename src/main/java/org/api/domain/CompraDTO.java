@@ -15,6 +15,5 @@ public class CompraDTO implements Serializable {
     @NotNull(message = "El numero de entradas no puede estar vacio")
     private Integer numero_entradas;
 
-    @NotEmpty(message = "La fecha de compra no puede estar vacia")
     private String fecha_compra;
 }

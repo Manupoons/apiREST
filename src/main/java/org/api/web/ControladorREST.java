@@ -31,7 +31,7 @@ public class ControladorREST {
 
     @PutMapping("/{idCompra}")
     public Compra editarCompra(@PathVariable Long idCompra, @RequestBody CompraDTO compraDTO) {
-        return iCompraService.editarCompra(idCompra, CompraMapper.compraDTOToCompra(compraDTO)).getBody();
+        return iCompraService.editarCompra(idCompra, CompraMapper.editionCompraDTOToCompra(compraDTO)).getBody();
     }
 
     @DeleteMapping("/{idCompra}")

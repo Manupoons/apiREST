@@ -10,25 +10,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Data
-@Table(name = "compras")
-public class Compra implements Serializable {
+@Table(name = "evento")
+public class Evento implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_compra;
-
-    private String nombre_cliente;
-
-    @NotNull(message = "Numero entradas no puede estar vacio")
-    @JsonProperty(required = true)
-    private Integer numero_entradas;
-
-    @NotEmpty(message = "La fecha no puede estar vacia")
-    @JsonProperty(required = true)
-    private String fecha_compra;
-
     private Long id_evento;
+
+    @JsonProperty(required = true)
+    private String nombre_evento;
+
+    @JsonProperty(required = true)
+    private String hora_evento;
+
+    @JsonProperty(required = true)
+    private String fecha_evento;
+
+    @JsonProperty(required = true)
+    private String empresa_evento;
 }

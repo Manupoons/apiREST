@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
@@ -32,8 +31,22 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(InvalidEditedCompraException.class)
     public ResponseEntity<Map<String, String>> handleInvalidEditedCompraException(InvalidEditedCompraException ex) {
-        Map<String, String> editionErrors = new HashMap<>();
-        editionErrors.put("editionError", ex.getMessage());
-        return new ResponseEntity<>(editionErrors, HttpStatus.BAD_REQUEST);
+        Map<String, String> editionCompraErrors = new HashMap<>();
+        editionCompraErrors.put("editionCompraError", ex.getMessage());
+        return new ResponseEntity<>(editionCompraErrors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidEventoException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidEventoException(InvalidEventoException ex) {
+        Map<String, String> eventoErrors = new HashMap<>();
+        eventoErrors.put("eventoError", ex.getMessage());
+        return new ResponseEntity<>(eventoErrors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidEditedEventoException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidEditedEventoException(InvalidEditedEventoException ex) {
+        Map<String, String> editionEventoErrors = new HashMap<>();
+        editionEventoErrors.put("editionEventoError", ex.getMessage());
+        return new ResponseEntity<>(editionEventoErrors, HttpStatus.BAD_REQUEST);
     }
 }

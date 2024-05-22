@@ -11,6 +11,9 @@ public class ValidateEditionCompra {
 
     public static void validateEditionCompra(Compra compra) {
         if (compra.getNumero_entradas() != null) {
+            if (compra.getNumero_entradas() != (double) compra.getNumero_entradas()) {
+                throw new InvalidEditedCompraException("The number of tickets must be an integer");
+            }
             if(compra.getNumero_entradas()<1){
                 throw new InvalidEditedCompraException("The number of edited tickets can't be less than 1");
             }
@@ -21,6 +24,14 @@ public class ValidateEditionCompra {
         if(compra.getFecha_compra() != null){
             if (!isValidDate(compra.getFecha_compra())){
                 throw new InvalidEditedCompraException("Invalid date format. Expected format is yyyy-MM-dd");
+            }
+            if (LocalDate.parse(compra.getFecha_compra(), DATE_FORMATTER).isAfter(LocalDate.now())) {
+                throw new InvalidEditedCompraException("The purchase date can't be in the future");
+            }
+        }
+        if (compra.getId_evento() != null){
+            if (compra.getId_evento() != (double) compra.getId_evento()) {
+                throw new InvalidEditedCompraException("The id of the event must be an integer");
             }
         }
     }

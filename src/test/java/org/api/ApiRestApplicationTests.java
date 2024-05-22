@@ -1,6 +1,7 @@
 package org.api;
 
 import org.api.domain.CompraDTO;
+import org.api.domain.EventoDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
@@ -104,36 +105,69 @@ class ApiRestApplicationTests {
     }
 
     @Test
-    void assertThatEditionWithLessThan1TicketFails() throws Exception {
+    void assertThatEditionCompraWithLessThan1TicketFails() throws Exception {
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNumero_entradas(0);
-        mockMvc.perform(put("/api/compras/{idCompra}", 1)
+        mockMvc.perform(put("/api/compras/{id_compra}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionError").value("The number of edited tickets can't be less than 1"));
+                .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets can't be less than 1"));
     }
 
     @Test
-    void assertThatEditionWithMoreThan20TicketsFails() throws Exception {
+    void assertThatEditionCompraWithMoreThan20TicketsFails() throws Exception {
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNumero_entradas(21);
-        mockMvc.perform(put("/api/compras/{idCompra}", 1)
+        mockMvc.perform(put("/api/compras/{id_compra}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionError").value("The number of edited tickets can't be more than 20"));
+                .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets can't be more than 20"));
     }
 
     @Test
-    void assertThatEditionWithInvalidDateFails() throws Exception {
+    void assertThatEditionCompraWithInvalidDateFails() throws Exception {
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("200-02-15");
-        mockMvc.perform(put("/api/compras/{idCompra}", 1)
+        mockMvc.perform(put("/api/compras/{id_compra}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionError").value("Invalid date format. Expected format is yyyy-MM-dd"));
+                .andExpect(jsonPath("$.editionCompraError").value("Invalid date format. Expected format is yyyy-MM-dd"));
+    }
+
+    @Test
+    void assertThatEventoWithoutNameFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setEmpresa_evento("cuatroochenta");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("The event name can't be empty"));
+    }
+
+    @Test
+    void assertThatEventoWithoutEmpresaFails() throws Exception{
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("Estatus");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("The business name can't be empty"));
+    }
+
+    @Test
+    void assertThatEditionEventoWithInvalidTimeFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setHora_evento("1:65");
+        mockMvc.perform(put("/api/evento/{id_evento}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionEventoError").value("Invalid time format. Expected format is HH:mm"));
     }
 }

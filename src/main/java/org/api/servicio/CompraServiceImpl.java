@@ -1,7 +1,6 @@
 package org.api.servicio;
 
 import java.util.List;
-import java.util.Objects;
 import org.api.domain.Compra;
 import org.api.dao.ICompraDAO;
 import org.api.validations.ValidateCompra;
@@ -47,6 +46,9 @@ public class CompraServiceImpl implements ICompraService{
         if (compra.getFecha_compra() != null) {
             compraEditada.setFecha_compra(compra.getFecha_compra());
         }
+        if (compra.getId_evento() != null){
+            compraEditada.setId_evento(compra.getId_evento());
+        }
         return new ResponseEntity<>(iCompraDAO.save(compraEditada), HttpStatus.OK);
     }
 
@@ -54,7 +56,7 @@ public class CompraServiceImpl implements ICompraService{
     @Transactional
     public void eliminarCompra(Long id) {
         try {
-            iCompraDAO.delete(Objects.requireNonNull(iCompraDAO.findById(id).orElse(null)));
+            iCompraDAO.deleteById(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);

@@ -13,5 +13,7 @@ public interface IPersonaService {
 
     ResponseEntity<Persona> editarPersona(Long id, Persona persona);
 
+    List<Persona> listadoPersonasPorEvento(Long id);
+
     void eliminarPersona(Long id);
 }

@@ -16,5 +16,7 @@ public interface IEventoService {
 
     List<Compra> listadoCompraPorEvento(Long id);
 
+    List<Evento> listadoEventosPorPersona(Long id);
+
     void eliminarEvento(Long id);
 }

@@ -1,5 +1,6 @@
 package org.api.servicio;
 
+import org.api.dao.IRelEventoPersonaDAO;
 import org.api.domain.Compra;
 import org.api.domain.Evento;
 import org.api.dao.IEventoDAO;
@@ -19,11 +20,13 @@ public class EventoServiceImpl implements IEventoService{
 
     private final IEventoDAO iEventoDAO;
     private final ICompraDAO iCompraDAO;
+    private final IRelEventoPersonaDAO iRelEventoPersonaDAO;
 
     @Autowired
-    public EventoServiceImpl(IEventoDAO eventoDAO, ICompraDAO iCompraDAO) {
+    public EventoServiceImpl(IEventoDAO eventoDAO, ICompraDAO iCompraDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
         this.iEventoDAO = eventoDAO;
         this.iCompraDAO = iCompraDAO;
+        this.iRelEventoPersonaDAO = iRelEventoPersonaDAO;
     }
 
     @Override
@@ -36,6 +39,12 @@ public class EventoServiceImpl implements IEventoService{
     @Transactional
     public List<Compra> listadoCompraPorEvento(Long idEvento){
         return iCompraDAO.findByEventoIdEvento(idEvento);
+    }
+
+    @Override
+    @Transactional
+    public List<Evento> listadoEventosPorPersona(Long idPersona) {
+        return iRelEventoPersonaDAO.findByPersonaIdPersona(idPersona);
     }
 
     @Override

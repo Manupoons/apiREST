@@ -8,7 +8,6 @@ import org.api.Mapper.CompraMapper;
 import org.api.servicio.ICompraService;
 import org.api.servicio.IEventoService;
 import org.api.servicio.IPersonaService;
-import org.api.servicio.IRelEventoPersonaService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,15 +18,13 @@ public class ControladorREST {
     private final ICompraService iCompraService;
     private final IEventoService iEventoService;
     private final IPersonaService iPersonaService;
-    private final IRelEventoPersonaService iRelEventoPersonaService;
     private final CompraMapper compraMapper;
 
     @Autowired
-    public ControladorREST(ICompraService iCompraService, IEventoService iEventoService, IPersonaService iPersonaService, IRelEventoPersonaService iRelEventoPersonaService, CompraMapper compraMapper) {
+    public ControladorREST(ICompraService iCompraService, IEventoService iEventoService, IPersonaService iPersonaService, CompraMapper compraMapper) {
         this.iCompraService = iCompraService;
         this.iEventoService = iEventoService;
         this.iPersonaService = iPersonaService;
-        this.iRelEventoPersonaService = iRelEventoPersonaService;
         this.compraMapper = compraMapper;
     }
 
@@ -53,12 +50,12 @@ public class ControladorREST {
 
     @GetMapping("/evento/compras/{idEvento}")
     public List<Persona> listarPersonasPorEvento(@PathVariable Long idEvento) {
-        return iRelEventoPersonaService.listadoPersonaPorEvento(idEvento);
+        return iPersonaService.listadoPersonasPorEvento(idEvento);
     }
 
     @GetMapping("/evento/compras/{idPersona}")
     public List<Evento> listarEventosPorPersona(@PathVariable Long idPersona) {
-        return iRelEventoPersonaService.listadoEventosPorPersona(idPersona);
+        return iEventoService.listadoEventosPorPersona(idPersona);
     }
 
     @PostMapping("/compras/guardar")

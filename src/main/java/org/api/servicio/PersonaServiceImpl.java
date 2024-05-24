@@ -1,6 +1,8 @@
 package org.api.servicio;
 
 import org.api.dao.IPersonaDAO;
+import org.api.dao.IRelEventoPersonaDAO;
+import org.api.domain.Evento;
 import org.api.domain.Persona;
 import org.api.validations.ValidateEditionPersona;
 import org.api.validations.ValidatePersona;
@@ -15,15 +17,23 @@ import java.util.List;
 public class PersonaServiceImpl implements IPersonaService {
 
     private final IPersonaDAO iPersonaDAO;
+    private final IRelEventoPersonaDAO iRelEventoPersonaDAO;
 
-    public PersonaServiceImpl(IPersonaDAO iPersonaDAO) {
+    public PersonaServiceImpl(IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
         this.iPersonaDAO = iPersonaDAO;
+        this.iRelEventoPersonaDAO = iRelEventoPersonaDAO;
     }
 
     @Override
     @Transactional
     public List<Persona> listarPersonas() {
         return (List<Persona>) iPersonaDAO.findAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Persona> listadoPersonasPorEvento(Long idPersona) {
+        return iRelEventoPersonaDAO.findByEventoIdEvento(idPersona);
     }
 
     @Override

@@ -1,15 +1,14 @@
 package org.api.web;
 
 import java.util.List;
-
+import org.api.domain.*;
 import org.api.Mapper.EventoMapper;
-import org.api.domain.Compra;
-import org.api.domain.CompraDTO;
+import org.api.Mapper.PersonaMapper;
 import org.api.Mapper.CompraMapper;
-import org.api.domain.Evento;
-import org.api.domain.EventoDTO;
 import org.api.servicio.ICompraService;
 import org.api.servicio.IEventoService;
+import org.api.servicio.IPersonaService;
+import org.api.servicio.IRelEventoPersonaService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,11 +18,17 @@ public class ControladorREST {
 
     private final ICompraService iCompraService;
     private final IEventoService iEventoService;
+    private final IPersonaService iPersonaService;
+    private final IRelEventoPersonaService iRelEventoPersonaService;
+    private final CompraMapper compraMapper;
 
     @Autowired
-    public ControladorREST(ICompraService iCompraService, IEventoService iEventoService) {
+    public ControladorREST(ICompraService iCompraService, IEventoService iEventoService, IPersonaService iPersonaService, IRelEventoPersonaService iRelEventoPersonaService, CompraMapper compraMapper) {
         this.iCompraService = iCompraService;
         this.iEventoService = iEventoService;
+        this.iPersonaService = iPersonaService;
+        this.iRelEventoPersonaService = iRelEventoPersonaService;
+        this.compraMapper = compraMapper;
     }
 
     @GetMapping("/compras")
@@ -36,14 +41,29 @@ public class ControladorREST {
         return iEventoService.listarEventos();
     }
 
-    @GetMapping("/evento/compras/{id_evento}")
-    public List<Compra> listarEvento(@PathVariable Long id_evento) {
-        return iEventoService.listadoCompraPorEvento(id_evento);
+    @GetMapping("/persona")
+    public List<Persona> listarPersonas() {
+        return iPersonaService.listarPersonas();
+    }
+
+    @GetMapping("/evento/compras/{idEvento}")
+    public List<Compra> listarComprasPorEvento(@PathVariable Long idEvento) {
+        return iEventoService.listadoCompraPorEvento(idEvento);
+    }
+
+    @GetMapping("/evento/compras/{idEvento}")
+    public List<Persona> listarPersonasPorEvento(@PathVariable Long idEvento) {
+        return iRelEventoPersonaService.listadoPersonaPorEvento(idEvento);
+    }
+
+    @GetMapping("/evento/compras/{idPersona}")
+    public List<Evento> listarEventosPorPersona(@PathVariable Long idPersona) {
+        return iRelEventoPersonaService.listadoEventosPorPersona(idPersona);
     }
 
     @PostMapping("/compras/guardar")
     public Compra nuevaCompra(@RequestBody CompraDTO compraDTO) {
-        return iCompraService.nuevaCompra(CompraMapper.compraDTOToCompra(compraDTO)).getBody();
+        return iCompraService.nuevaCompra(compraMapper.compraDTOToCompra(compraDTO)).getBody();
     }
 
     @PostMapping("/evento/guardar")
@@ -51,23 +71,38 @@ public class ControladorREST {
         return iEventoService.nuevoEvento(EventoMapper.eventoDTOToEvento(eventoDTO)).getBody();
     }
 
-    @PutMapping("/compras/{id_compra}")
-    public Compra editarCompra(@PathVariable Long id_compra, @RequestBody CompraDTO compraDTO) {
-        return iCompraService.editarCompra(id_compra, CompraMapper.editionCompraDTOToCompra(compraDTO)).getBody();
+    @PostMapping("/persona/guardar")
+    public Persona nuevoPersona(@RequestBody PersonaDTO personaDTO) {
+        return iPersonaService.nuevaPersona(PersonaMapper.personaDTOToPersona(personaDTO)).getBody();
     }
 
-    @PutMapping("/evento/{id_evento}")
-    public Evento editarEvento(@PathVariable Long id_evento, @RequestBody EventoDTO eventoDTO) {
-        return iEventoService.editarEvento(id_evento, EventoMapper.editionEventoDTOToEvento(eventoDTO)).getBody();
+    @PutMapping("/compras/{idCompra}")
+    public Compra editarCompra(@PathVariable Long idCompra, @RequestBody CompraDTO compraDTO) {
+        return iCompraService.editarCompra(idCompra, CompraMapper.editionCompraDTOToCompra(compraDTO)).getBody();
     }
 
-    @DeleteMapping("/compras/{id_compra}")
-    public void eliminarCompra(@PathVariable Long id_compra) {
-        iCompraService.eliminarCompra(id_compra);
+    @PutMapping("/evento/{idEvento}")
+    public Evento editarEvento(@PathVariable Long idEvento, @RequestBody EventoDTO eventoDTO) {
+        return iEventoService.editarEvento(idEvento, EventoMapper.editionEventoDTOToEvento(eventoDTO)).getBody();
     }
 
-    @DeleteMapping("/evento/{id_evento}")
-    public void eliminarEvento(@PathVariable Long id_evento) {
-        iEventoService.eliminarEvento(id_evento);
+    @PutMapping("/persona/{idPersona}")
+    public Persona editarPersona(@PathVariable Long idPersona, @RequestBody PersonaDTO personaDTO) {
+        return iPersonaService.editarPersona(idPersona, PersonaMapper.editionPersonaDTOToPersona(personaDTO)).getBody();
+    }
+
+    @DeleteMapping("/compras/{idCompra}")
+    public void eliminarCompra(@PathVariable Long idCompra) {
+        iCompraService.eliminarCompra(idCompra);
+    }
+
+    @DeleteMapping("/evento/{idEvento}")
+    public void eliminarEvento(@PathVariable Long idEvento) {
+        iEventoService.eliminarEvento(idEvento);
+    }
+
+    @DeleteMapping("/persona/{idPersona}")
+    public void eliminarPersona(@PathVariable Long idPersona) {
+        iPersonaService.eliminarPersona(idPersona);
     }
 }

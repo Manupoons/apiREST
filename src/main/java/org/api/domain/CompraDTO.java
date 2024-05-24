@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 public class CompraDTO implements Serializable {
-    private Long id_compra;
+    private Long idCompra;
 
     @NotEmpty(message = "El nombre del cliente no puede estar vacio")
     private String nombre_cliente;
@@ -17,6 +17,5 @@ public class CompraDTO implements Serializable {
 
     private String fecha_compra;
 
-    private Long id_evento;
-
+    private Evento evento;
 }

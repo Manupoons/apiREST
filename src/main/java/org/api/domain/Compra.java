@@ -18,7 +18,7 @@ public class Compra implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_compra;
+    private Long idCompra;
 
     private String nombre_cliente;
 
@@ -30,5 +30,7 @@ public class Compra implements Serializable {
     @JsonProperty(required = true)
     private String fecha_compra;
 
-    private Long id_evento;
+    @ManyToOne
+    @JoinColumn(name = "id_evento", nullable = false)
+    private Evento evento;
 }

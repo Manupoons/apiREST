@@ -4,7 +4,6 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import jakarta.persistence.*;
-import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,7 +17,7 @@ public class Evento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_evento;
+    private Long idEvento;
 
     @JsonProperty(required = true)
     private String nombre_evento;

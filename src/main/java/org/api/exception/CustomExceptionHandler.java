@@ -49,4 +49,18 @@ public class CustomExceptionHandler {
         editionEventoErrors.put("editionEventoError", ex.getMessage());
         return new ResponseEntity<>(editionEventoErrors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InvalidPersonaException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidPersonaException(InvalidPersonaException ex) {
+        Map<String, String> personaErrors = new HashMap<>();
+        personaErrors.put("personaError", ex.getMessage());
+        return new ResponseEntity<>(personaErrors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidEditedPersonaException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidEditedPersonaException(InvalidEditedPersonaException ex) {
+        Map<String, String> editionPersonaErrors = new HashMap<>();
+        editionPersonaErrors.put("editionPersonaError", ex.getMessage());
+        return new ResponseEntity<>(editionPersonaErrors, HttpStatus.BAD_REQUEST);
+    }
 }

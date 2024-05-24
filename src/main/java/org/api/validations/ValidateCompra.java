@@ -24,7 +24,7 @@ public class ValidateCompra {
         if (compra.getNumero_entradas() == null) {
             throw new InvalidCompraException("The number of tickets can't be null");
         }
-        if (compra.getNumero_entradas() != Math.floor(compra.getNumero_entradas())) {
+        if (compra.getNumero_entradas() != (double) compra.getNumero_entradas()) {
             throw new InvalidCompraException("The number of tickets must be an integer");
         }
         if (compra.getNumero_entradas() < 1){

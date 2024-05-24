@@ -29,8 +29,8 @@ public class ValidateEditionCompra {
                 throw new InvalidEditedCompraException("The purchase date can't be in the future");
             }
         }
-        if (compra.getId_evento() != null){
-            if (compra.getId_evento() != (double) compra.getId_evento()) {
+        if (compra.getEvento() != null){
+            if (compra.getEvento().getIdEvento() != (double) compra.getEvento().getIdEvento()) {
                 throw new InvalidEditedCompraException("The id of the event must be an integer");
             }
         }

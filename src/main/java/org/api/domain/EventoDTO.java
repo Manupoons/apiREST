@@ -1,12 +1,11 @@
 package org.api.domain;
 
-import lombok.*;
+import lombok.Data;
 import java.io.Serializable;
-import javax.validation.constraints.*;
 
 @Data
 public class EventoDTO implements Serializable {
-    private Long id_evento;
+    private Long idEvento;
 
     private String nombre_evento;
 

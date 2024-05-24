@@ -1,7 +1,9 @@
 package org.api;
 
 import org.api.domain.CompraDTO;
+import org.api.domain.Evento;
 import org.api.domain.EventoDTO;
+import org.api.domain.PersonaDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
@@ -41,10 +43,13 @@ class ApiRestApplicationTests {
 
     @Test
     void assertThatCompraWithoutNameFails() throws Exception {
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente(null);
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
@@ -54,10 +59,13 @@ class ApiRestApplicationTests {
 
     @Test
     void assertThatCompraWithoutTicketsFails() throws Exception {
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(null);
         compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
@@ -67,10 +75,13 @@ class ApiRestApplicationTests {
 
     @Test
     void assertThatCompraWithLessThan1TicketFails() throws Exception {
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(0);
         compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
@@ -80,10 +91,13 @@ class ApiRestApplicationTests {
 
     @Test
     void assertThatCompraWithMoreThan20TicketsFails() throws Exception {
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(21);
         compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
@@ -93,10 +107,13 @@ class ApiRestApplicationTests {
 
     @Test
     void assertThatCompraWithInvalidDateFails() throws Exception{
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("200-02-15");
+        compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
@@ -169,5 +186,41 @@ class ApiRestApplicationTests {
                 .content(objectMapper.writeValueAsString(eventoDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.editionEventoError").value("Invalid time format. Expected format is HH:mm"));
+    }
+
+    @Test
+    void assertThatPersonaWithoutNameFails() throws Exception {
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setCorreo_persona("mpons@gmail.com");
+        personaDTO.setTelefono_persona("644268497");
+        mockMvc.perform(post("/api/persona/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.personaError").value("The persona name can't be empty"));
+    }
+
+    @Test
+    void assertThatPersonaWithoutCorreoFails() throws Exception {
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("Manu");
+        personaDTO.setTelefono_persona("644268497");
+        mockMvc.perform(post("/api/persona/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.personaError").value("The persona email can't be empty"));
+    }
+
+    @Test
+    void assertThatPersonaWithoutTelefonoFails() throws Exception {
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("Manu");
+        personaDTO.setCorreo_persona("mpons@gmail.com");
+        mockMvc.perform(post("/api/persona/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.personaError").value("The persona phone number can't be empty"));
     }
 }

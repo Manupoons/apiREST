@@ -34,8 +34,8 @@ public class EventoServiceImpl implements IEventoService{
 
     @Override
     @Transactional
-    public List<Compra> listadoCompraPorEvento(Long id_evento){
-        return iCompraDAO.findById_evento(id_evento);
+    public List<Compra> listadoCompraPorEvento(Long idEvento){
+        return iCompraDAO.findByEventoIdEvento(idEvento);
     }
 
     @Override

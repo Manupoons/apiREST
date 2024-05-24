@@ -46,8 +46,8 @@ public class CompraServiceImpl implements ICompraService{
         if (compra.getFecha_compra() != null) {
             compraEditada.setFecha_compra(compra.getFecha_compra());
         }
-        if (compra.getId_evento() != null){
-            compraEditada.setId_evento(compra.getId_evento());
+        if (compra.getEvento().getIdEvento() != null){
+            compraEditada.setEvento(compra.getEvento());
         }
         return new ResponseEntity<>(iCompraDAO.save(compraEditada), HttpStatus.OK);
     }

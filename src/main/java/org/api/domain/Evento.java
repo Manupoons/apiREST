@@ -6,6 +6,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,7 +20,6 @@ public class Evento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEvento;
 
-    @JsonProperty(required = true)
     private String nombre_evento;
 
     @JsonProperty(required = true)
@@ -30,4 +30,7 @@ public class Evento implements Serializable {
 
     @JsonProperty(required = true)
     private String empresa_evento;
+
+    @OneToMany(mappedBy = "evento")
+    private Set<RelEventoPersona> relEventoPersona;
 }

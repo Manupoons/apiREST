@@ -2,8 +2,8 @@ package org.api.servicio;
 
 import org.api.dao.IPersonaDAO;
 import org.api.dao.IRelEventoPersonaDAO;
-import org.api.domain.Evento;
 import org.api.domain.Persona;
+import org.api.domain.RelEventoPersona;
 import org.api.validations.ValidateEditionPersona;
 import org.api.validations.ValidatePersona;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,8 +33,14 @@ public class PersonaServiceImpl implements IPersonaService {
 
     @Override
     @Transactional
-    public List<Persona> listadoPersonasPorEvento(Long idPersona) {
-        return iRelEventoPersonaDAO.findByEventoIdEvento(idPersona);
+    public List<Persona> listadoPersonasPorEvento(Long idEvento) {
+        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByEventoIdEvento(idEvento);
+        List<Persona> personas = new ArrayList<>();
+        for (RelEventoPersona rel : rels) {
+            Long personaID = rel.getPersona().getIdPersona();
+            iPersonaDAO.findById(personaID).ifPresent(personas::add);
+        }
+        return personas;
     }
 
     @Override

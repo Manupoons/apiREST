@@ -58,6 +58,38 @@ class ApiRestApplicationTests {
     }
 
     @Test
+    void assertThatCompraWithInvalidNameFails() throws Exception{
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNombre_cliente("-");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
+        mockMvc.perform(post("/api/compras/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.compraError").value("The client name can only contain letters and spaces"));
+    }
+
+    @Test
+    void assertThatCompraWithInvalidNameLengthFails() throws Exception{
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNombre_cliente("lucialucialucialucialucialucialucialucialucialucialucia");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setEvento(evento);
+        mockMvc.perform(post("/api/compras/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.compraError").value("The client name can't be longer than 50 characters"));
+    }
+
+    @Test
     void assertThatCompraWithoutTicketsFails() throws Exception {
         Evento evento = new Evento();
         evento.setIdEvento(1L);
@@ -74,7 +106,7 @@ class ApiRestApplicationTests {
     }
 
     @Test
-    void assertThatCompraWithLessThan1TicketFails() throws Exception {
+    void assertThatCompraWithInvalidQuantityTicketsFails() throws Exception{
         Evento evento = new Evento();
         evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
@@ -86,23 +118,23 @@ class ApiRestApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.compraError").value("The number of tickets can't be less than 1"));
+                .andExpect(jsonPath("$.compraError").value("The number of tickets has to be between 1 and 20"));
     }
 
     @Test
-    void assertThatCompraWithMoreThan20TicketsFails() throws Exception {
+    void assertThatCompraWithoutDateFails() throws Exception{
         Evento evento = new Evento();
         evento.setIdEvento(1L);
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNombre_cliente("Manu");
-        compraDTO.setNumero_entradas(21);
-        compraDTO.setFecha_compra("2002-02-15");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra(null);
         compraDTO.setEvento(evento);
         mockMvc.perform(post("/api/compras/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.compraError").value("The number of tickets can't be more than 20"));
+                .andExpect(jsonPath("$.compraError").value("The purchase date can't be null"));
     }
 
     @Test
@@ -122,42 +154,52 @@ class ApiRestApplicationTests {
     }
 
     @Test
-    void assertThatEditionCompraWithLessThan1TicketFails() throws Exception {
+    void assertThatCompraWithInvalidFutureDateFails() throws Exception{
+        Evento evento = new Evento();
+        evento.setIdEvento(1L);
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNombre_cliente("Manu");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra("5000-02-15");
+        compraDTO.setEvento(evento);
+        mockMvc.perform(post("/api/compras/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.compraError").value("The purchase date can't be in the future"));
+    }
+
+//    @Test
+//    void assertThatCompraWithoutEventoFails() throws Exception{
+//        Evento evento = new Evento();
+//        evento.setIdEvento(null);
+//        CompraDTO compraDTO = new CompraDTO();
+//        compraDTO.setNombre_cliente("Manu");
+//        compraDTO.setNumero_entradas(3);
+//        compraDTO.setFecha_compra("2024-02-15");
+//        compraDTO.setEvento(evento);
+//        mockMvc.perform(post("/api/compras/guardar")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(compraDTO)))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$.compraError").value("The evento id can't be null"));
+//    }
+
+    @Test
+    void assertThatEditionCompraWithInvalidTicketFails() throws Exception {
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNumero_entradas(0);
         mockMvc.perform(put("/api/compras/{id_compra}", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets can't be less than 1"));
-    }
-
-    @Test
-    void assertThatEditionCompraWithMoreThan20TicketsFails() throws Exception {
-        CompraDTO compraDTO = new CompraDTO();
-        compraDTO.setNumero_entradas(21);
-        mockMvc.perform(put("/api/compras/{id_compra}", 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(compraDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets can't be more than 20"));
-    }
-
-    @Test
-    void assertThatEditionCompraWithInvalidDateFails() throws Exception {
-        CompraDTO compraDTO = new CompraDTO();
-        compraDTO.setNumero_entradas(3);
-        compraDTO.setFecha_compra("200-02-15");
-        mockMvc.perform(put("/api/compras/{id_compra}", 1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(compraDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionCompraError").value("Invalid date format. Expected format is yyyy-MM-dd"));
+                .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets has to be between 1 and 20"));
     }
 
     @Test
     void assertThatEventoWithoutNameFails() throws Exception {
         EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento(null);
         eventoDTO.setEmpresa_evento("cuatroochenta");
         mockMvc.perform(post("/api/evento/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -167,14 +209,89 @@ class ApiRestApplicationTests {
     }
 
     @Test
+    void assertThatEventoWithInvalidNameFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("º");
+        eventoDTO.setEmpresa_evento("cuatroochenta");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("The event name can only contain letters, certain special characters and spaces"));
+    }
+
+    @Test
+    void assertThatEventoWitInvalidTimeFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("Arenal");
+        eventoDTO.setHora_evento("64:00");
+        eventoDTO.setEmpresa_evento("cuatroochenta");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("Invalid time format. Expected format is HH:mm"));
+    }
+
+    @Test
+    void assertThatEventoWitInvalidDateFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("Arenal");
+        eventoDTO.setFecha_evento("20-02-15");
+        eventoDTO.setEmpresa_evento("cuatroochenta");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("Invalid date format. Expected format is yyyy-MM-dd"));
+    }
+
+    @Test
+    void assertThatEventoWitInvalidFutureDateFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("Arenal");
+        eventoDTO.setFecha_evento("5000-02-15");
+        eventoDTO.setEmpresa_evento("cuatroochenta");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("The purchase date can't be in the future"));
+    }
+
+    @Test
     void assertThatEventoWithoutEmpresaFails() throws Exception{
         EventoDTO eventoDTO = new EventoDTO();
         eventoDTO.setNombre_evento("Estatus");
+        eventoDTO.setEmpresa_evento(null);
         mockMvc.perform(post("/api/evento/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(eventoDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.eventoError").value("The business name can't be empty"));
+    }
+
+    @Test
+    void assertThatEventoWithInvalidEmpresaFails() throws Exception{
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("Estatus");
+        eventoDTO.setEmpresa_evento("ººº");
+        mockMvc.perform(post("/api/evento/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.eventoError").value("The business name can only contain letters and spaces"));
+    }
+
+    @Test
+    void assertThatEditionEventoWithInvalidNameFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setNombre_evento("*****");
+        mockMvc.perform(put("/api/evento/{id_evento}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionEventoError").value("The event name can only contain letters, certain special characters and spaces"));
     }
 
     @Test
@@ -189,10 +306,31 @@ class ApiRestApplicationTests {
     }
 
     @Test
+    void assertThatEditionEventoWithInvalidDateFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setFecha_evento("200-02-15");
+        mockMvc.perform(put("/api/evento/{id_evento}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionEventoError").value("Invalid date format. Expected format is yyyy-MM-dd"));
+    }
+
+    @Test
+    void assertThatEditionEventoWithInvalidFutureDateFails() throws Exception {
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setFecha_evento("5000-02-15");
+        mockMvc.perform(put("/api/evento/{id_evento}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(eventoDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionEventoError").value("The date can't be in the future"));
+    }
+
+    @Test
     void assertThatPersonaWithoutNameFails() throws Exception {
         PersonaDTO personaDTO = new PersonaDTO();
         personaDTO.setCorreo_persona("mpons@gmail.com");
-        personaDTO.setTelefono_persona("644268497");
         mockMvc.perform(post("/api/persona/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personaDTO)))
@@ -201,10 +339,21 @@ class ApiRestApplicationTests {
     }
 
     @Test
+    void assertThatPersonaWithInvalidNameFails() throws Exception {
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("98");
+        personaDTO.setCorreo_persona("mpons@gmail.com");
+        mockMvc.perform(post("/api/persona/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.personaError").value("The name of the person can only contain letters and spaces"));
+    }
+
+    @Test
     void assertThatPersonaWithoutCorreoFails() throws Exception {
         PersonaDTO personaDTO = new PersonaDTO();
         personaDTO.setNombre_persona("Manu");
-        personaDTO.setTelefono_persona("644268497");
         mockMvc.perform(post("/api/persona/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personaDTO)))
@@ -213,14 +362,49 @@ class ApiRestApplicationTests {
     }
 
     @Test
-    void assertThatPersonaWithoutTelefonoFails() throws Exception {
+    void assertThatPersonaWithInvalidCorreoFails() throws Exception {
         PersonaDTO personaDTO = new PersonaDTO();
         personaDTO.setNombre_persona("Manu");
-        personaDTO.setCorreo_persona("mpons@gmail.com");
+        personaDTO.setCorreo_persona("__________");
         mockMvc.perform(post("/api/persona/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personaDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.personaError").value("The persona phone number can't be empty"));
+                .andExpect(jsonPath("$.personaError").value("The email of the person is not valid"));
+    }
+
+    @Test
+    void assertThatPersonaWithInvalidTelefonoFails() throws Exception {
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("Manu");
+        personaDTO.setCorreo_persona("mpons@gmail.com");
+        personaDTO.setTelefono_persona("666666666*");
+        mockMvc.perform(post("/api/persona/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.personaError").value("The phone number of the person is not valid. It must be exactly 9 digits long"));
+    }
+
+    @Test
+    void assertThatEditionPersonaWithInvalidNameFails() throws Exception{
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("------");
+        mockMvc.perform(put("/api/persona/{idPersona}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionPersonaError").value("The persona name can only contain letters and spaces"));
+    }
+
+    @Test
+    void assertThatEditionPersonaWithInvalidTelefonoFails() throws Exception{
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setTelefono_persona("666666666*");
+        mockMvc.perform(put("/api/persona/{idPersona}", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.editionPersonaError").value("The phone number of the person is not valid"));
     }
 }

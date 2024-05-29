@@ -14,8 +14,8 @@ public class ValidateEditionEvento {
 
     public static void validateEditionEvento(Evento evento) {
         if(evento.getNombre_evento() != null){
-            if (!evento.getNombre_evento().matches("^[a-zA-Z\\s]+$")) {
-                throw new InvalidEditedEventoException("The event name can only contain letters and spaces");
+            if (!evento.getNombre_evento().matches("^[\\w\\s@#&!\"'()\\-.,:;]+$")) {
+                throw new InvalidEditedEventoException("The event name can only contain letters, certain special characters and spaces");
             }
         }
         if(evento.getHora_evento() != null){
@@ -28,7 +28,7 @@ public class ValidateEditionEvento {
                 throw new InvalidEditedEventoException("Invalid date format. Expected format is yyyy-MM-dd");
             }
             if (LocalDate.parse(evento.getFecha_evento(), DATE_FORMATTER).isAfter(LocalDate.now())) {
-                throw new InvalidEditedEventoException("The purchase date can't be in the future");
+                throw new InvalidEditedEventoException("The date can't be in the future");
             }
         }
     }

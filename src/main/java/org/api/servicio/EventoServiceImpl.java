@@ -1,10 +1,11 @@
 package org.api.servicio;
 
-import org.api.dao.IRelEventoPersonaDAO;
 import org.api.domain.Compra;
 import org.api.domain.Evento;
 import org.api.dao.IEventoDAO;
 import org.api.dao.ICompraDAO;
+import org.api.domain.RelEventoPersona;
+import org.api.dao.IRelEventoPersonaDAO;
 import org.api.validations.ValidateEvento;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.api.validations.ValidateEditionEvento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +46,13 @@ public class EventoServiceImpl implements IEventoService{
     @Override
     @Transactional
     public List<Evento> listadoEventosPorPersona(Long idPersona) {
-        return iRelEventoPersonaDAO.findByPersonaIdPersona(idPersona);
+        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByPersonaIdPersona(idPersona);
+        List<Evento> eventos = new ArrayList<>();
+        for (RelEventoPersona rel : rels) {
+            Long eventoId = rel.getEvento().getIdEvento();
+            iEventoDAO.findById(eventoId).ifPresent(eventos::add);
+        }
+        return eventos;
     }
 
     @Override

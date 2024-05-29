@@ -18,10 +18,10 @@ public class ValidatePersona {
             throw new InvalidPersonaException("The email of the person is not valid");
         }
 
-        if (persona.getTelefono_persona() == null) {
-            throw new InvalidPersonaException("The persona phone number can't be empty");
-        } else if (!persona.getTelefono_persona().matches("^[0-9]{9}$")) {
-            throw new InvalidPersonaException("The phone number of the person is not valid. It must be exactly 10 digits long");
+        if (persona.getTelefono_persona() != null){
+            if (!persona.getTelefono_persona().matches("^[0-9]{9}$")) {
+                throw new InvalidPersonaException("The phone number of the person is not valid. It must be exactly 9 digits long");
+            }
         }
     }
 }

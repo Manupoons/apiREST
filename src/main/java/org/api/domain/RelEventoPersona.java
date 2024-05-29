@@ -20,9 +20,13 @@ public class RelEventoPersona implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEventoPersona;
 
+    @ManyToOne
+    @JoinColumn(name = "id_evento", nullable = false)
     @JsonProperty(required = true)
-    private Long idEvento;
+    private Evento evento;
 
+    @ManyToOne
+    @JoinColumn(name = "id_persona", nullable = false)
     @JsonProperty(required = true)
-    private Long idPersona;
+    private Persona persona;
 }

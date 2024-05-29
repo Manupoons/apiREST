@@ -2,6 +2,7 @@ package org.api.domain;
 
 import lombok.Data;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 public class PersonaDTO implements Serializable {
@@ -13,4 +14,6 @@ public class PersonaDTO implements Serializable {
     private String correo_persona;
 
     private String telefono_persona;
+
+    private Set<RelEventoPersona> relEventoPersonas;
 }

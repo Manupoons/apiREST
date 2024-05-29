@@ -4,6 +4,7 @@ package org.api.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.Set;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class Persona implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_persona;
+    private Long idPersona;
 
     @JsonProperty(required = true)
     private String nombre_persona;
@@ -27,4 +28,7 @@ public class Persona implements Serializable {
 
     @JsonProperty(required = true)
     private String telefono_persona;
+
+    @OneToMany(mappedBy = "persona")
+    private Set<RelEventoPersona> relEventoPersona;
 }

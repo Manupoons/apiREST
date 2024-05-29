@@ -48,12 +48,12 @@ public class ControladorREST {
         return iEventoService.listadoCompraPorEvento(idEvento);
     }
 
-    @GetMapping("/evento/compras/{idEvento}")
+    @GetMapping("/persona/{idEvento}")
     public List<Persona> listarPersonasPorEvento(@PathVariable Long idEvento) {
         return iPersonaService.listadoPersonasPorEvento(idEvento);
     }
 
-    @GetMapping("/evento/compras/{idPersona}")
+    @GetMapping("/evento/{idPersona}")
     public List<Evento> listarEventosPorPersona(@PathVariable Long idPersona) {
         return iEventoService.listadoEventosPorPersona(idPersona);
     }

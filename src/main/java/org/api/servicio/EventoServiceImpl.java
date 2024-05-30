@@ -68,14 +68,14 @@ public class EventoServiceImpl implements IEventoService{
         ValidateEditionEvento.validateEditionEvento(evento);
         Evento eventoEditado = iEventoDAO.findById(id).orElse(null);
         assert eventoEditado != null;
+        if (evento.getNombre_evento() != null){
+            eventoEditado.setNombre_evento(evento.getNombre_evento());
+        }
         if (evento.getHora_evento() != null) {
             eventoEditado.setHora_evento(evento.getHora_evento());
         }
         if (evento.getFecha_evento() != null) {
             eventoEditado.setFecha_evento(evento.getFecha_evento());
-        }
-        if (evento.getEmpresa_evento() != null) {
-            eventoEditado.setEmpresa_evento(evento.getEmpresa_evento());
         }
         return new ResponseEntity<>(iEventoDAO.save(eventoEditado), HttpStatus.OK);
     }

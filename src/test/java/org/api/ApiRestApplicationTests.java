@@ -169,21 +169,19 @@ class ApiRestApplicationTests {
                 .andExpect(jsonPath("$.compraError").value("The purchase date can't be in the future"));
     }
 
-//    @Test
-//    void assertThatCompraWithoutEventoFails() throws Exception{
-//        Evento evento = new Evento();
-//        evento.setIdEvento(null);
-//        CompraDTO compraDTO = new CompraDTO();
-//        compraDTO.setNombre_cliente("Manu");
-//        compraDTO.setNumero_entradas(3);
-//        compraDTO.setFecha_compra("2024-02-15");
-//        compraDTO.setEvento(evento);
-//        mockMvc.perform(post("/api/compras/guardar")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(compraDTO)))
-//                .andExpect(status().isBadRequest())
-//                .andExpect(jsonPath("$.compraError").value("The evento id can't be null"));
-//    }
+    @Test
+    void assertThatCompraWithoutEventoFails() throws Exception{
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNombre_cliente("Manu");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra("2024-02-15");
+        compraDTO.setEvento(null);
+        mockMvc.perform(post("/api/compras/guardar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.compraError").value("The evento id can't be null"));
+    }
 
     @Test
     void assertThatEditionCompraWithInvalidTicketFails() throws Exception {

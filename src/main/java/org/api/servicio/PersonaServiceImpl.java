@@ -59,9 +59,6 @@ public class PersonaServiceImpl implements IPersonaService {
         if (persona.getNombre_persona() != null){
             personaEditada.setNombre_persona(persona.getNombre_persona());
         }
-        if (persona.getCorreo_persona() != null){
-            personaEditada.setCorreo_persona(persona.getCorreo_persona());
-        }
         if (persona.getTelefono_persona() != null){
             personaEditada.setTelefono_persona(persona.getTelefono_persona());
         }

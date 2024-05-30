@@ -21,10 +21,7 @@ public class PersonaMapper {
         if (personaDTO.getNombre_persona() != null){
             persona.setNombre_persona(personaDTO.getNombre_persona());
         }
-        if(personaDTO.getCorreo_persona() != null){
-            persona.setCorreo_persona(personaDTO.getCorreo_persona());
-        }
-        if(personaDTO.getTelefono_persona() != null){
+        if (personaDTO.getTelefono_persona() != null){
             persona.setTelefono_persona(personaDTO.getTelefono_persona());
         }
         ValidateEditionPersona.validateEditionPersona(persona);

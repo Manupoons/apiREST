@@ -41,8 +41,11 @@ public class ValidateCompra {
             }
         }
 
-        if (compra.getEvento() == null) {
+        if (compra.getIdEvento() == null) {
             throw new InvalidCompraException("The evento id can't be null");
+        }
+        if (compra.getIdPersona() == null) {
+            throw new InvalidCompraException("The persona id can't be null");
         }
     }
 

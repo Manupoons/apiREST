@@ -11,6 +11,8 @@ public interface ICompraService {
 
     ResponseEntity<Compra> nuevaCompra(Compra compra);
 
+    void createRelEventoPersona(Long idEvento, Long idPersona);
+
     ResponseEntity<Compra> editarCompra(Long id, Compra compra);
 
     void eliminarCompra(Long id);

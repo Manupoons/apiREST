@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ICompraDAO extends CrudRepository<Compra, Long> {
-    List<Compra> findByEventoIdEvento(Long idEvento);
+    List<Compra> findByIdEvento(Long idEvento);
+    List<Compra> findByIdPersona(Long idPersona);
 }

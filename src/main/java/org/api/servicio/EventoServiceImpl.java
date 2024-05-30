@@ -14,8 +14,7 @@ import org.api.validations.ValidateEditionEvento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EventoServiceImpl implements IEventoService{
@@ -40,7 +39,7 @@ public class EventoServiceImpl implements IEventoService{
     @Override
     @Transactional
     public List<Compra> listadoCompraPorEvento(Long idEvento){
-        return iCompraDAO.findByEventoIdEvento(idEvento);
+        return iCompraDAO.findByIdEvento(idEvento);
     }
 
     @Override

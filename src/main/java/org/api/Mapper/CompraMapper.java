@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class CompraMapper {
 
-    public Compra compraDTOToCompra(CompraDTO compraDTO) {
+    public Compra compraDTOToCompra(CompraDTO compraDTO, Long idEvento, Long idPersona) {
         Compra compra = new Compra();
         compra.setNombre_cliente(compraDTO.getNombre_cliente());
         compra.setNumero_entradas(compraDTO.getNumero_entradas());
         compra.setFecha_compra(compraDTO.getFecha_compra());
-        compra.setEvento(compraDTO.getEvento());
+        compra.setIdEvento(idEvento);
+        compra.setIdPersona(idPersona);
         ValidateCompra.validateCompra(compra);
         return compra;
     }

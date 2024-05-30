@@ -1,5 +1,6 @@
 package org.api.servicio;
 
+import org.api.domain.Compra;
 import org.api.domain.Persona;
 import org.springframework.http.ResponseEntity;
 
@@ -12,6 +13,8 @@ public interface IPersonaService {
     ResponseEntity<Persona> nuevaPersona(Persona persona);
 
     ResponseEntity<Persona> editarPersona(Long id, Persona persona);
+
+    List<Compra> listadoCompraPorPersona(Long id);
 
     List<Persona> listadoPersonasPorEvento(Long id);
 

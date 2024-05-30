@@ -1,26 +1,31 @@
 package org.api.servicio;
 
-import org.api.dao.IPersonaDAO;
-import org.api.dao.IRelEventoPersonaDAO;
+import org.api.domain.Compra;
 import org.api.domain.Persona;
+import org.api.dao.ICompraDAO;
+import org.api.dao.IPersonaDAO;
 import org.api.domain.RelEventoPersona;
-import org.api.validations.ValidateEditionPersona;
+import org.api.dao.IRelEventoPersonaDAO;
 import org.api.validations.ValidatePersona;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
+import org.api.validations.ValidateEditionPersona;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PersonaServiceImpl implements IPersonaService {
 
+    private final ICompraDAO iCompraDAO;
     private final IPersonaDAO iPersonaDAO;
     private final IRelEventoPersonaDAO iRelEventoPersonaDAO;
 
-    public PersonaServiceImpl(IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
+    @Autowired
+    public PersonaServiceImpl(ICompraDAO iCompraDAO, IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
+        this.iCompraDAO = iCompraDAO;
         this.iPersonaDAO = iPersonaDAO;
         this.iRelEventoPersonaDAO = iRelEventoPersonaDAO;
     }
@@ -29,6 +34,12 @@ public class PersonaServiceImpl implements IPersonaService {
     @Transactional
     public List<Persona> listarPersonas() {
         return (List<Persona>) iPersonaDAO.findAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Compra> listadoCompraPorPersona(Long idPersona){
+        return iCompraDAO.findByIdPersona(idPersona);
     }
 
     @Override

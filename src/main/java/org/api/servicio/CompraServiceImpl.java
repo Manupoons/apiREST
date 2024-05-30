@@ -1,8 +1,10 @@
 package org.api.servicio;
 
-import java.util.List;
-import org.api.domain.Compra;
+import org.api.domain.*;
+import org.api.dao.IEventoDAO;
 import org.api.dao.ICompraDAO;
+import org.api.dao.IPersonaDAO;
+import org.api.dao.IRelEventoPersonaDAO;
 import org.api.validations.ValidateCompra;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,14 +13,22 @@ import org.api.validations.ValidateEditionCompra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
+
 @Service
 public class CompraServiceImpl implements ICompraService{
 
     private final ICompraDAO iCompraDAO;
+    private final IEventoDAO iEventoDAO;
+    private final IPersonaDAO iPersonaDAO;
+    private final IRelEventoPersonaDAO iRelEventoPersonaDAO;
 
     @Autowired
-    public CompraServiceImpl(ICompraDAO iCompraDao) {
+    public CompraServiceImpl(ICompraDAO iCompraDao, IEventoDAO iEventoDAO, IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
         this.iCompraDAO = iCompraDao;
+        this.iEventoDAO = iEventoDAO;
+        this.iPersonaDAO = iPersonaDAO;
+        this.iRelEventoPersonaDAO = iRelEventoPersonaDAO;
     }
 
     @Override
@@ -32,6 +42,23 @@ public class CompraServiceImpl implements ICompraService{
     public ResponseEntity<Compra> nuevaCompra(Compra compra) {
         ValidateCompra.validateCompra(compra);
         return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
+    }
+
+    @Override
+    @Transactional
+    public void createRelEventoPersona(Long idEvento, Long idPersona){
+        Evento evento = iEventoDAO.findById(idEvento).orElseThrow(() -> new IllegalArgumentException("Invalid evento ID"));
+        Persona persona = iPersonaDAO.findById(idPersona).orElseThrow(() -> new IllegalArgumentException("Invalid persona ID"));
+
+        List<RelEventoPersona> existRelEventoPersona = iRelEventoPersonaDAO.findByEventoIdEventoAndPersonaIdPersona(idEvento, idPersona);
+        if (!existRelEventoPersona.isEmpty()){
+            existRelEventoPersona.getFirst();
+            return;
+        }
+        RelEventoPersona relEventoPersona = new RelEventoPersona();
+        relEventoPersona.setEvento(evento);
+        relEventoPersona.setPersona(persona);
+        iRelEventoPersonaDAO.save(relEventoPersona);
     }
 
     @Override

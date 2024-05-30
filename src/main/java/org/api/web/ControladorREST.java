@@ -2,12 +2,9 @@ package org.api.web;
 
 import java.util.List;
 import org.api.domain.*;
-import org.api.Mapper.EventoMapper;
-import org.api.Mapper.PersonaMapper;
-import org.api.Mapper.CompraMapper;
-import org.api.servicio.ICompraService;
-import org.api.servicio.IEventoService;
-import org.api.servicio.IPersonaService;
+import org.api.Mapper.*;
+import org.api.servicio.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,6 +45,11 @@ public class ControladorREST {
         return iEventoService.listadoCompraPorEvento(idEvento);
     }
 
+    @GetMapping("/persona/compras/{idPersona}")
+    public List<Compra> listarComprasPorPersona(@PathVariable Long idPersona) {
+        return iPersonaService.listadoCompraPorPersona(idPersona);
+    }
+
     @GetMapping("/persona/{idEvento}")
     public List<Persona> listarPersonasPorEvento(@PathVariable Long idEvento) {
         return iPersonaService.listadoPersonasPorEvento(idEvento);
@@ -58,9 +60,12 @@ public class ControladorREST {
         return iEventoService.listadoEventosPorPersona(idPersona);
     }
 
-    @PostMapping("/compras/guardar")
-    public Compra nuevaCompra(@RequestBody CompraDTO compraDTO) {
-        return iCompraService.nuevaCompra(compraMapper.compraDTOToCompra(compraDTO)).getBody();
+    @PostMapping("/compras/guardar/{idEvento}/{idPersona}")
+    public ResponseEntity<Compra> nuevaCompra(@RequestBody CompraDTO compraDTO, @PathVariable Long idEvento, @PathVariable Long idPersona) {
+        Compra compra = compraMapper.compraDTOToCompra(compraDTO, idEvento, idPersona);
+        ResponseEntity<Compra> response = iCompraService.nuevaCompra(compra);
+        iCompraService.createRelEventoPersona(idEvento, idPersona);
+        return response;
     }
 
     @PostMapping("/evento/guardar")

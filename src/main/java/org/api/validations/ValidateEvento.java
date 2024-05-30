@@ -1,12 +1,10 @@
 package org.api.validations;
 
 import org.api.domain.Evento;
-import org.api.exception.InvalidEditedEventoException;
 import org.api.exception.InvalidEventoException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.time.format.*;
 import java.util.regex.Pattern;
 
 public class ValidateEvento {

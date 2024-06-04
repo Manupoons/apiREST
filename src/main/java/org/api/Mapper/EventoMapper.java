@@ -2,8 +2,8 @@ package org.api.Mapper;
 
 import org.api.domain.Evento;
 import org.api.domain.EventoDTO;
+import org.api.domain.EventoEditDTO;
 import org.api.validations.ValidateEvento;
-import org.api.validations.ValidateEditionEvento;
 
 public class EventoMapper {
 
@@ -17,18 +17,18 @@ public class EventoMapper {
         return evento;
     }
 
-    public static Evento editionEventoDTOToEvento(EventoDTO eventoDTO) {
+    public static Evento editionEventoDTOToEvento(EventoEditDTO eventoEditDTO) {
         Evento evento = new Evento();
-        if(eventoDTO.getNombre_evento() != null){
-            evento.setNombre_evento(eventoDTO.getNombre_evento());
+        if(eventoEditDTO.getNombre_evento() != null){
+            evento.setNombre_evento(eventoEditDTO.getNombre_evento());
         }
-        if (eventoDTO.getHora_evento() != null){
-            evento.setHora_evento(eventoDTO.getHora_evento());
+        if (eventoEditDTO.getHora_evento() != null){
+            evento.setHora_evento(eventoEditDTO.getHora_evento());
         }
-        if(eventoDTO.getFecha_evento() != null){
-            evento.setFecha_evento(eventoDTO.getFecha_evento());
+        if(eventoEditDTO.getFecha_evento() != null){
+            evento.setFecha_evento(eventoEditDTO.getFecha_evento());
         }
-        ValidateEditionEvento.validateEditionEvento(evento);
+        EventoEditDTO.validateEditionEvento(evento);
         return evento;
     }
 }

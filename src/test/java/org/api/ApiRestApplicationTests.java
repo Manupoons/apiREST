@@ -46,9 +46,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente(null);
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("2002-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -61,9 +59,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("-");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("2002-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -76,9 +72,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("lucialucialucialucialucialucialucialucialucialucialucia");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("2002-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -91,9 +85,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(null);
         compraDTO.setFecha_compra("2002-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -106,9 +98,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(0);
         compraDTO.setFecha_compra("2002-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -121,9 +111,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra(null);
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -137,9 +125,7 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("200-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
@@ -152,51 +138,46 @@ class ApiRestApplicationTests {
         compraDTO.setNombre_cliente("Manu");
         compraDTO.setNumero_entradas(3);
         compraDTO.setFecha_compra("5000-02-15");
-        compraDTO.setIdEvento(1L);
-        compraDTO.setIdPersona(1L);
-        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, 1)
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.compraError").value("The purchase date can't be in the future"));
     }
 
-//
-//    @Test
-//    void assertThatCompraWithoutIdEventoFails() throws Exception{
-//        CompraDTO compraDTO = new CompraDTO();
-//        compraDTO.setNombre_cliente("Manu");
-//        compraDTO.setNumero_entradas(3);
-//        compraDTO.setFecha_compra("2024-02-15");
-//        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", "", 1)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(compraDTO)))
-//                .andExpect(status().isBadRequest())
-//                .andExpect(jsonPath("$.compraError").value("The evento id can't be null"));
-//    }
-//
-//    @Test
-//    void assertThatCompraWithoutIdPersonaFails() throws Exception{
-//        CompraDTO compraDTO = new CompraDTO();
-//        compraDTO.setNombre_cliente("Manu");
-//        compraDTO.setNumero_entradas(3);
-//        compraDTO.setFecha_compra("2024-02-15");
-//        mockMvc.perform(post("/api/compras/guardar/{idEvento}/{idPersona}", 1, "")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(compraDTO)))
-//                .andExpect(status().isBadRequest())
-//                .andExpect(jsonPath("$.compraError").value("The persona id can't be null"));
-//    }
+    @Test
+    void assertThatCompraWithPersonaThatCantSellFails() throws Exception{
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNombre_cliente("Manu");
+        compraDTO.setNumero_entradas(3);
+        compraDTO.setFecha_compra("2024-02-15");
+        mockMvc.perform(post("/api/compra/guardar/{idEvento}/{idPersona}", 1, 4)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.compraError").value("This person can't sell tickets"));
+    }
 
     @Test
     void assertThatEditionCompraWithInvalidTicketFails() throws Exception {
         CompraDTO compraDTO = new CompraDTO();
         compraDTO.setNumero_entradas(0);
-        mockMvc.perform(put("/api/compras/{idCompra}", 1)
+        mockMvc.perform(put("/api/compra/{idCompra}/num_entradas/{value}", 2, 0)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(compraDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.editionCompraError").value("The number of edited tickets has to be between 1 and 20"));
+    }
+
+    @Test
+    void assertThatEditionCompraWithIdNotFoundFails() throws Exception {
+        CompraDTO compraDTO = new CompraDTO();
+        compraDTO.setNumero_entradas(5);
+        mockMvc.perform(put("/api/compra/{idCompra}/num_entradas/{value}", 2000, 6)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(compraDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.urlErrors").value("The compra with this id doesn't exist"));
     }
 
     @Test
@@ -247,19 +228,6 @@ class ApiRestApplicationTests {
                 .content(objectMapper.writeValueAsString(eventoDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.eventoError").value("Invalid date format. Expected format is yyyy-MM-dd"));
-    }
-
-    @Test
-    void assertThatEventoWitInvalidFutureDateFails() throws Exception {
-        EventoDTO eventoDTO = new EventoDTO();
-        eventoDTO.setNombre_evento("Arenal");
-        eventoDTO.setFecha_evento("5000-02-15");
-        eventoDTO.setEmpresa_evento("cuatroochenta");
-        mockMvc.perform(post("/api/evento/guardar")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(eventoDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.eventoError").value("The purchase date can't be in the future"));
     }
 
     @Test
@@ -320,14 +288,14 @@ class ApiRestApplicationTests {
     }
 
     @Test
-    void assertThatEditionEventoWithInvalidFutureDateFails() throws Exception {
+    void assertThatEditionEventoWithIdNotFoundFails() throws Exception {
         EventoDTO eventoDTO = new EventoDTO();
-        eventoDTO.setFecha_evento("5000-02-15");
-        mockMvc.perform(put("/api/evento/{idEvento}", 1)
+        eventoDTO.setNombre_evento("Arenal");
+        mockMvc.perform(put("/api/evento/{idEvento}", 2000)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(eventoDTO)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.editionEventoError").value("The date can't be in the future"));
+                .andExpect(jsonPath("$.urlErrors").value("The evento with this id doesn't exist"));
     }
 
     @Test
@@ -409,5 +377,16 @@ class ApiRestApplicationTests {
                 .content(objectMapper.writeValueAsString(personaDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.editionPersonaError").value("The phone number of the person is not valid"));
+    }
+
+    @Test
+    void assertThatEditionPersonaWithIdNotFoundFails() throws Exception{
+        PersonaDTO personaDTO = new PersonaDTO();
+        personaDTO.setNombre_persona("Manu");
+        mockMvc.perform(put("/api/persona/{idPersona}", 2000)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.urlErrors").value("The persona with this id doesn't exist"));
     }
 }

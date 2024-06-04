@@ -1,12 +1,13 @@
 package org.api.web;
 
-import java.util.List;
-import org.api.domain.*;
 import org.api.Mapper.*;
+import org.api.domain.*;
 import org.api.servicio.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -26,46 +27,44 @@ public class ControladorREST {
     }
 
     @GetMapping("/compras")
-    public List<Compra> inicio() {
+    public List<Compra> listarCompras() {
         return iCompraService.listarCompras();
     }
 
-    @GetMapping("/evento")
-    public List<Evento> listar() {
+    @GetMapping("/compras/evento/{idEvento}")
+    public List<Compra> listarComprasPorEvento(@PathVariable IdValue idEvento) {
+        return iEventoService.listadoCompraPorEvento(idEvento);
+    }
+
+    @GetMapping("/compras/persona/{idPersona}")
+    public List<Compra> listarComprasPorPersona(@PathVariable IdValue idPersona) {
+        return iPersonaService.listadoCompraPorPersona(idPersona);
+    }
+
+    @GetMapping("/eventos")
+    public List<Evento> listarEventos() {
         return iEventoService.listarEventos();
     }
 
-    @GetMapping("/persona")
+//    @GetMapping("/personas/evento/{idEvento}")
+//    public List<Persona> listarPersonasPorEvento(@PathVariable IdValue idEvento) {
+//        return iPersonaService.listadoPersonasPorEvento(idEvento);
+//    }
+//
+//    @GetMapping("/eventos/persona/{idPersona}")
+//    public List<Evento> listarEventosPorPersona(@PathVariable IdValue idPersona) {
+//        return iEventoService.listadoEventosPorPersona(idPersona);
+//    }
+
+    @GetMapping("/personas")
     public List<Persona> listarPersonas() {
         return iPersonaService.listarPersonas();
     }
 
-    @GetMapping("/evento/compras/{idEvento}")
-    public List<Compra> listarComprasPorEvento(@PathVariable Long idEvento) {
-        return iEventoService.listadoCompraPorEvento(idEvento);
-    }
-
-    @GetMapping("/persona/compras/{idPersona}")
-    public List<Compra> listarComprasPorPersona(@PathVariable Long idPersona) {
-        return iPersonaService.listadoCompraPorPersona(idPersona);
-    }
-
-    @GetMapping("/persona/{idEvento}")
-    public List<Persona> listarPersonasPorEvento(@PathVariable Long idEvento) {
-        return iPersonaService.listadoPersonasPorEvento(idEvento);
-    }
-
-    @GetMapping("/evento/{idPersona}")
-    public List<Evento> listarEventosPorPersona(@PathVariable Long idPersona) {
-        return iEventoService.listadoEventosPorPersona(idPersona);
-    }
-
-    @PostMapping("/compras/guardar/{idEvento}/{idPersona}")
-    public ResponseEntity<Compra> nuevaCompra(@RequestBody CompraDTO compraDTO, @PathVariable Long idEvento, @PathVariable Long idPersona) {
-        Compra compra = compraMapper.compraDTOToCompra(compraDTO, idEvento, idPersona);
-        ResponseEntity<Compra> response = iCompraService.nuevaCompra(compra);
-        iCompraService.createRelEventoPersona(idEvento, idPersona);
-        return response;
+    @PostMapping("/compra/guardar/{idEvento}/{idPersona}")
+    public ResponseEntity<Compra> nuevaCompra(@RequestBody CompraDTO compraDTO, @PathVariable IdValue idEvento, @PathVariable IdValue idPersona) {
+        //iCompraService.createRelEventoPersona(idEvento, idPersona);
+        return iCompraService.nuevaCompra(compraMapper.compraDTOToCompra(compraDTO, idEvento, idPersona), idPersona);
     }
 
     @PostMapping("/evento/guardar")
@@ -74,37 +73,37 @@ public class ControladorREST {
     }
 
     @PostMapping("/persona/guardar")
-    public Persona nuevoPersona(@RequestBody PersonaDTO personaDTO) {
+    public Persona nuevaPersona(@RequestBody PersonaDTO personaDTO) {
         return iPersonaService.nuevaPersona(PersonaMapper.personaDTOToPersona(personaDTO)).getBody();
     }
 
-    @PutMapping("/compras/{idCompra}")
-    public Compra editarCompra(@PathVariable Long idCompra, @RequestBody CompraDTO compraDTO) {
-        return iCompraService.editarCompra(idCompra, CompraMapper.editionCompraDTOToCompra(compraDTO)).getBody();
+    @PutMapping("/compra/{idCompra}/num_entradas/{numero_entradas}")
+    public Compra editarCompra(@PathVariable IdValue idCompra, @PathVariable int numero_entradas) {
+        return iCompraService.editarCompra(idCompra, numero_entradas);
     }
 
     @PutMapping("/evento/{idEvento}")
-    public Evento editarEvento(@PathVariable Long idEvento, @RequestBody EventoDTO eventoDTO) {
-        return iEventoService.editarEvento(idEvento, EventoMapper.editionEventoDTOToEvento(eventoDTO)).getBody();
+    public Evento editarEvento(@PathVariable IdValue idEvento, @RequestBody EventoEditDTO eventoEditDTO) {
+        return iEventoService.editarEvento(idEvento, EventoMapper.editionEventoDTOToEvento(eventoEditDTO)).getBody();
     }
 
     @PutMapping("/persona/{idPersona}")
-    public Persona editarPersona(@PathVariable Long idPersona, @RequestBody PersonaDTO personaDTO) {
+    public Persona editarPersona(@PathVariable IdValue idPersona, @RequestBody PersonaDTO personaDTO) {
         return iPersonaService.editarPersona(idPersona, PersonaMapper.editionPersonaDTOToPersona(personaDTO)).getBody();
     }
 
-    @DeleteMapping("/compras/{idCompra}")
-    public void eliminarCompra(@PathVariable Long idCompra) {
+    @DeleteMapping("/compra/{idCompra}")
+    public void eliminarCompra(@PathVariable IdValue idCompra) {
         iCompraService.eliminarCompra(idCompra);
     }
 
     @DeleteMapping("/evento/{idEvento}")
-    public void eliminarEvento(@PathVariable Long idEvento) {
+    public void eliminarEvento(@PathVariable IdValue idEvento) {
         iEventoService.eliminarEvento(idEvento);
     }
 
     @DeleteMapping("/persona/{idPersona}")
-    public void eliminarPersona(@PathVariable Long idPersona) {
+    public void eliminarPersona(@PathVariable IdValue idPersona) {
         iPersonaService.eliminarPersona(idPersona);
     }
 }

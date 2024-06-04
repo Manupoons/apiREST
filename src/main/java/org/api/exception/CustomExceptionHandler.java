@@ -2,7 +2,6 @@ package org.api.exception;
 
 import java.util.Map;
 import java.util.HashMap;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -62,5 +61,12 @@ public class CustomExceptionHandler {
         Map<String, String> editionPersonaErrors = new HashMap<>();
         editionPersonaErrors.put("editionPersonaError", ex.getMessage());
         return new ResponseEntity<>(editionPersonaErrors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidURLException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidURLException(InvalidURLException ex) {
+        Map<String, String> urlErrors = new HashMap<>();
+        urlErrors.put("urlErrors", ex.getMessage());
+        return new ResponseEntity<>(urlErrors, HttpStatus.BAD_REQUEST);
     }
 }

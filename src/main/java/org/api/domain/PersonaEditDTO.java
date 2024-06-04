@@ -1,10 +1,16 @@
-package org.api.validations;
+package org.api.domain;
 
-import org.api.domain.Persona;
+import lombok.Data;
 import org.api.exception.InvalidEditedPersonaException;
 
+import java.io.Serializable;
 
-public class ValidateEditionPersona {
+@Data
+public class PersonaEditDTO implements Serializable {
+
+    private String nombre_persona;
+
+    private String telefono_persona;
 
     public static void validateEditionPersona(Persona persona) {
         if(persona.getNombre_persona() != null){

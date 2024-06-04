@@ -1,11 +1,10 @@
 package org.api.validations;
 
-import org.api.domain.Evento;
-import org.api.exception.InvalidEventoException;
-
-import java.time.LocalDate;
 import java.time.format.*;
+import java.time.LocalDate;
+import org.api.domain.Evento;
 import java.util.regex.Pattern;
+import org.api.exception.InvalidEventoException;
 
 public class ValidateEvento {
 
@@ -29,9 +28,6 @@ public class ValidateEvento {
         if (evento.getFecha_evento() != null){
             if (!isValidDate(evento.getFecha_evento())) {
                 throw new InvalidEventoException("Invalid date format. Expected format is yyyy-MM-dd");
-            }
-            if (LocalDate.parse(evento.getFecha_evento(), DATE_FORMATTER).isAfter(LocalDate.now())) {
-                throw new InvalidEventoException("The purchase date can't be in the future");
             }
         }
 

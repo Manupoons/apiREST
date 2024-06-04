@@ -2,6 +2,7 @@ package org.api.servicio;
 
 import org.api.domain.Compra;
 import org.api.domain.Evento;
+import org.api.domain.IdValue;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -12,11 +13,11 @@ public interface IEventoService {
 
     ResponseEntity<Evento> nuevoEvento(Evento evento);
 
-    ResponseEntity<Evento> editarEvento(Long id, Evento evento);
+    ResponseEntity<Evento> editarEvento(IdValue id, Evento evento);
 
-    List<Compra> listadoCompraPorEvento(Long id);
+    List<Compra> listadoCompraPorEvento(IdValue id);
 
-    List<Evento> listadoEventosPorPersona(Long id);
+    //List<Evento> listadoEventosPorPersona(IdValue id);
 
-    void eliminarEvento(Long id);
+    void eliminarEvento(IdValue id);
 }

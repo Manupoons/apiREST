@@ -1,9 +1,10 @@
 package org.api.domain;
 
+import jakarta.persistence.*;
 import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
-import jakarta.persistence.*;
 
 @Entity
 @Data

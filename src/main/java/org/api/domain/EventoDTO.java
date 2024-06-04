@@ -1,8 +1,8 @@
 package org.api.domain;
 
 import lombok.Data;
-import java.io.Serializable;
 import java.util.Set;
+import java.io.Serializable;
 
 @Data
 public class EventoDTO implements Serializable {

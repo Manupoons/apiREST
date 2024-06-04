@@ -1,13 +1,22 @@
-package org.api.validations;
+package org.api.domain;
 
-import org.api.domain.Evento;
+import lombok.Data;
 import org.api.exception.InvalidEditedEventoException;
 
 import java.time.LocalDate;
-import java.time.format.*;
+import java.io.Serializable;
 import java.util.regex.Pattern;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-public class ValidateEditionEvento {
+@Data
+public class EventoEditDTO implements Serializable {
+
+    private String nombre_evento;
+
+    private String hora_evento;
+
+    private String fecha_evento;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
@@ -26,9 +35,6 @@ public class ValidateEditionEvento {
         if(evento.getFecha_evento() != null){
             if (!isValidDate(evento.getFecha_evento())){
                 throw new InvalidEditedEventoException("Invalid date format. Expected format is yyyy-MM-dd");
-            }
-            if (LocalDate.parse(evento.getFecha_evento(), DATE_FORMATTER).isAfter(LocalDate.now())) {
-                throw new InvalidEditedEventoException("The date can't be in the future");
             }
         }
     }

@@ -17,18 +17,18 @@ public class PersonaMapper {
         return persona;
     }
 
-    public static Persona editionPersonaDTOToPersona(PersonaDTO personaDTO) {
+    public static Persona editionPersonaDTOToPersona(PersonaEditDTO personaEditDTO) {
         Persona persona = new Persona();
-        if (personaDTO.getNombre_persona() != null){
-            persona.setNombre_persona(personaDTO.getNombre_persona());
+        if (personaEditDTO.getNombre_persona() != null){
+            persona.setNombre_persona(personaEditDTO.getNombre_persona());
         }
-        if (personaDTO.getTelefono_persona() != null){
-            persona.setTelefono_persona(personaDTO.getTelefono_persona());
+        if (personaEditDTO.getTelefono_persona() != null){
+            persona.setTelefono_persona(personaEditDTO.getTelefono_persona());
         }
-        if (personaDTO.getFecha_baja() != null){
-            persona.setFecha_baja(personaDTO.getFecha_baja());
+        if (personaEditDTO.getFecha_baja() != null){
+            persona.setFecha_baja(personaEditDTO.getFecha_baja());
         }
-        if (personaDTO.getFecha_baja() == null){
+        if (personaEditDTO.getFecha_baja() == null){
             persona.setFecha_baja(null);
         }
         PersonaEditDTO.validateEditionPersona(persona);

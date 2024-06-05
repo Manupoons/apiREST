@@ -99,8 +99,8 @@ public class ControladorREST {
     }
 
     @PutMapping("/persona/{idPersona}")
-    public Persona editarPersona(@PathVariable IdValue idPersona, @RequestBody PersonaDTO personaDTO) {
-        return iPersonaService.editarPersona(idPersona, PersonaMapper.editionPersonaDTOToPersona(personaDTO)).getBody();
+    public Persona editarPersona(@PathVariable IdValue idPersona, @RequestBody PersonaEditDTO personaEditDTO) {
+        return iPersonaService.editarPersona(idPersona, PersonaMapper.editionPersonaDTOToPersona(personaEditDTO)).getBody();
     }
 
     @DeleteMapping("/compra/{idCompra}")

@@ -51,7 +51,6 @@ public class PersonaServiceImpl implements IPersonaService {
         List<Long> idsPersona = rels.stream()
                                 .map(rel -> rel.getPersona().getIdPersona())
                                 .collect(Collectors.toList());
-
         return iPersonaDAO.findAllById(idsPersona);
     }
 

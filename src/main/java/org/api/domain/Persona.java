@@ -1,13 +1,13 @@
 package org.api.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.Data;
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Set;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Data

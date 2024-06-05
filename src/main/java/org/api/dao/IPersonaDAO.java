@@ -1,9 +1,11 @@
 package org.api.dao;
 
-import org.api.domain.IdValue;
 import org.api.domain.Persona;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IPersonaDAO extends CrudRepository<Persona, IdValue> {
-    Persona findByIdPersona(IdValue id);
+import java.util.List;
+
+public interface IPersonaDAO extends CrudRepository<Persona, Long> {
+    Persona findByIdPersona(Long idPersona);
+    List<Persona> findAllById(Iterable<Long> idsPersona);
 }

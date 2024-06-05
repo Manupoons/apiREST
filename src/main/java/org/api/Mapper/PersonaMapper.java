@@ -28,6 +28,9 @@ public class PersonaMapper {
         if (personaDTO.getFecha_baja() != null){
             persona.setFecha_baja(personaDTO.getFecha_baja());
         }
+        if (personaDTO.getFecha_baja() == null){
+            persona.setFecha_baja(null);
+        }
         PersonaEditDTO.validateEditionPersona(persona);
         return persona;
     }

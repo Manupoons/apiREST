@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class EventoDTO implements Serializable {
+
     private Long idEvento;
 
     private String nombre_evento;

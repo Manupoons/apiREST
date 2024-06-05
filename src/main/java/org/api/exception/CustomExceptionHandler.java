@@ -69,4 +69,11 @@ public class CustomExceptionHandler {
         urlErrors.put("urlErrors", ex.getMessage());
         return new ResponseEntity<>(urlErrors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InvalidIdException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidIdException(InvalidIdException ex) {
+        Map<String, String> idErrors = new HashMap<>();
+        idErrors.put("idError", ex.getMessage());
+        return new ResponseEntity<>(idErrors, HttpStatus.BAD_REQUEST);
+    }
 }

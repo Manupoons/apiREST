@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 @Data
 public class CompraDTO implements Serializable {
+
     private Long idCompra;
 
     private String nombre_cliente;

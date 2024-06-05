@@ -1,9 +1,9 @@
 package org.api.servicio;
 
 import org.api.domain.*;
-import org.api.dao.ICompraDAO;
-import org.api.dao.IPersonaDAO;
+import org.api.dao.*;
 import org.api.validations.ValidateCompra;
+import org.api.validations.ValidateCompraConPersona;
 import org.springframework.http.HttpStatus;
 import org.api.exception.InvalidURLException;
 import org.springframework.stereotype.Service;
@@ -35,41 +35,29 @@ public class CompraServiceImpl implements ICompraService{
 
     @Override
     @Transactional
-    public ResponseEntity<Compra> nuevaCompra(Compra compra, IdValue idPersona) {
-        Persona persona = iPersonaDAO.findByIdPersona(idPersona);
-        if (persona.getFecha_baja() != null) {
-            throw new InvalidCompraException("This person can't sell tickets");
-        }
-        else{
-            ValidateCompra.validateCompra(compra);
-        }
+    public ResponseEntity<Compra> nuevaCompra(Compra compra) {
+        ValidateCompra.validateCompra(compra);
         return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
     }
 
-//    @Override
-//    @Transactional
-//    public void createRelEventoPersona(Long idEvento, Long idPersona){
-//        Evento evento = iEventoDAO.findById(idEvento).orElseThrow(() -> new InvalidURLException("Evento id not found"));
-//        Persona persona = iPersonaDAO.findById(idPersona).orElseThrow(() -> new InvalidURLException("Persona id not found"));
-//        List<RelEventoPersona> existRelEventoPersona = iRelEventoPersonaDAO.findByEventoIdEventoAndPersonaIdPersona(idEvento, idPersona);
-//
-//        if (existRelEventoPersona.isEmpty()){
-//            throw new InvalidURLException("Rel evento persona id not found");
-//        }
-//        RelEventoPersona relEventoPersona = new RelEventoPersona();
-//        relEventoPersona.setEvento(evento);
-//        relEventoPersona.setPersona(persona);
-//        iRelEventoPersonaDAO.save(relEventoPersona);
-//    }
+    @Override
+    @Transactional
+    public ResponseEntity<Compra> nuevaCompraConPersona(Compra compra, IdValue idPersona) {
+         Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidCompraException("Couldn't find persona with this id"));
+         if (persona.getFecha_baja() == null) {
+             ValidateCompraConPersona.validateCompraconPersona(compra);
+             return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
+         }else{
+             throw new InvalidCompraException("This person can't sell tickets");
+         }
+    }
 
     @Override
     @Transactional
     public Compra editarCompra(IdValue id, int numero_entradas) {
         ValidateEditionCompra.validateEditionCompra(numero_entradas);
-        if (iCompraDAO.findByIdCompra(id) == null){
-            throw new InvalidURLException("The compra with this id doesn't exist");
-        }
-        Compra compraEditada = iCompraDAO.findByIdCompra(id);
+        iCompraDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The compra with this id doesn't exist"));
+        Compra compraEditada = iCompraDAO.findByIdCompra(id.getValue());
         compraEditada.setNumero_entradas(numero_entradas);
         return new ResponseEntity<>(iCompraDAO.save(compraEditada), HttpStatus.OK).getBody();
     }
@@ -77,9 +65,7 @@ public class CompraServiceImpl implements ICompraService{
     @Override
     @Transactional
     public void eliminarCompra(IdValue id) {
-        if (iCompraDAO.findByIdCompra(id)== null){
-            throw new InvalidURLException("The compra with this id doesn't exist");
-        }
-        iCompraDAO.deleteByIdCompra(id);
+        iCompraDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The compra with this id doesn't exist"));
+        iCompraDAO.deleteByIdCompra(id.getValue());
     }
 }

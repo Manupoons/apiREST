@@ -1,7 +1,7 @@
 package org.api.domain;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;

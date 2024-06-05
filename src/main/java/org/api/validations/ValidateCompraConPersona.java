@@ -1,15 +1,17 @@
 package org.api.validations;
 
-import java.time.format.*;
-import java.time.LocalDate;
 import org.api.domain.Compra;
 import org.api.exception.InvalidCompraException;
 
-public class ValidateCompra {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class ValidateCompraConPersona {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static void validateCompra(Compra compra) {
+    public static void validateCompraconPersona(Compra compra) {
 
         if (compra.getNombre_cliente() == null) {
             throw new InvalidCompraException("The client name can't be null");
@@ -43,6 +45,9 @@ public class ValidateCompra {
 
         if (compra.getIdEvento() == null) {
             throw new InvalidCompraException("The evento id can't be null");
+        }
+        if (compra.getIdPersona() == null) {
+            throw new InvalidCompraException("The persona id can't be null");
         }
     }
 

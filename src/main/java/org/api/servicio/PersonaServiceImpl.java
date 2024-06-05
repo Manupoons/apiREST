@@ -1,11 +1,9 @@
 package org.api.servicio;
 
 import org.api.domain.*;
-import org.api.dao.ICompraDAO;
-import org.api.dao.IPersonaDAO;
-import org.api.dao.IRelEventoPersonaDAO;
-import org.api.validations.ValidatePersona;
+import org.api.dao.*;
 import org.springframework.http.HttpStatus;
+import org.api.validations.ValidatePersona;
 import org.api.exception.InvalidURLException;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonaServiceImpl implements IPersonaService {
 
+    private final IEventoDAO iEventoDAO;
     private final ICompraDAO iCompraDAO;
     private final IPersonaDAO iPersonaDAO;
     private final IRelEventoPersonaDAO iRelEventoPersonaDAO;
 
     @Autowired
-    public PersonaServiceImpl(ICompraDAO iCompraDAO, IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
+    public PersonaServiceImpl(IEventoDAO iEventoDAO, ICompraDAO iCompraDAO, IPersonaDAO iPersonaDAO, IRelEventoPersonaDAO iRelEventoPersonaDAO) {
+        this.iEventoDAO = iEventoDAO;
         this.iCompraDAO = iCompraDAO;
         this.iPersonaDAO = iPersonaDAO;
         this.iRelEventoPersonaDAO = iRelEventoPersonaDAO;
@@ -38,26 +39,21 @@ public class PersonaServiceImpl implements IPersonaService {
     @Override
     @Transactional
     public List<Compra> listadoCompraPorPersona(IdValue idPersona){
-        if (iCompraDAO.findByIdPersona(idPersona).isEmpty()) {
-            throw new InvalidURLException("Persona id not found");
-        }
-        return iCompraDAO.findByIdPersona(idPersona);
+        iCompraDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidURLException("Persona id not found"));
+        return iCompraDAO.findByIdPersona(idPersona.getValue());
     }
 
-//    @Override
-//    @Transactional
-//    public List<Persona> listadoPersonasPorEvento(IdValue idEvento) {
-//        if (iRelEventoPersonaDAO.findByIdEventoPersona(idEvento)==null) {
-//            throw new InvalidURLException("Evento id not found");
-//        }
-//        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByEventoIdEvento(idEvento);
-//        List<Persona> personas = new ArrayList<>();
-//        for (RelEventoPersona rel : rels) {
-//            IdValue personaID = rel.getPersona().getIdPersona();
-//            iPersonaDAO.findByIdPersona(personaID).ifPresent(personas::add);
-//        }
-//        return personas;
-//    }
+    @Override
+    @Transactional
+    public List<Persona> listadoPersonasPorEvento(IdValue idEvento) {
+        iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("Evento id not found"));
+        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByEventoIdEvento(idEvento.getValue());
+        List<Long> idsPersona = rels.stream()
+                                .map(rel -> rel.getPersona().getIdPersona())
+                                .collect(Collectors.toList());
+
+        return iPersonaDAO.findAllById(idsPersona);
+    }
 
     @Override
     @Transactional
@@ -70,7 +66,8 @@ public class PersonaServiceImpl implements IPersonaService {
     @Transactional
     public ResponseEntity<Persona> editarPersona(IdValue id, Persona persona) {
         PersonaEditDTO.validateEditionPersona(persona);
-        Persona personaEditada = iPersonaDAO.findByIdPersona(id);
+        Persona personaEditada;
+        personaEditada = iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
         if (persona.getNombre_persona() != null){
             personaEditada.setNombre_persona(persona.getNombre_persona());
         }
@@ -80,16 +77,17 @@ public class PersonaServiceImpl implements IPersonaService {
         if (persona.getFecha_baja() != null){
             personaEditada.setFecha_baja(persona.getFecha_baja());
         }
+        if (persona.getFecha_baja() == null){
+            personaEditada.setFecha_baja(null);
+        }
         return new ResponseEntity<>(iPersonaDAO.save(personaEditada), HttpStatus.OK);
     }
 
     @Override
     @Transactional
     public void eliminarPersona(IdValue id) {
-        if (iPersonaDAO.findByIdPersona(id)==null) {
-            throw new InvalidURLException("The persona with this id doesn't exist");
-        }
-        Persona personaEditada = iPersonaDAO.findByIdPersona(id);
+        iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
+        Persona personaEditada = iPersonaDAO.findByIdPersona(id.getValue());
         personaEditada.setFecha_baja(String.valueOf(LocalDate.now()));
     }
 }

@@ -17,7 +17,7 @@ public interface IPersonaService {
 
     List<Compra> listadoCompraPorPersona(IdValue id);
 
-    //List<Persona> listadoPersonasPorEvento(IdValue id);
+    List<Persona> listadoPersonasPorEvento(IdValue id);
 
     void eliminarPersona(IdValue id);
 }

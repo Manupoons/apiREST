@@ -17,7 +17,7 @@ public interface IEventoService {
 
     List<Compra> listadoCompraPorEvento(IdValue id);
 
-    //List<Evento> listadoEventosPorPersona(IdValue id);
+    List<Evento> listadoEventosPorPersona(IdValue id);
 
     void eliminarEvento(IdValue id);
 }

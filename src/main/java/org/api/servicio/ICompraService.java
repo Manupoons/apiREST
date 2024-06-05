@@ -10,9 +10,9 @@ public interface ICompraService {
 
     List<Compra> listarCompras();
 
-    ResponseEntity<Compra> nuevaCompra(Compra compra, IdValue idPersona);
+    ResponseEntity<Compra> nuevaCompra(Compra compra);
 
-   // void createRelEventoPersona(Long idEvento, Long idPersona);
+    ResponseEntity<Compra> nuevaCompraConPersona(Compra compra, IdValue idPersona);
 
     Compra editarCompra(IdValue id, int numero_entradas);
 

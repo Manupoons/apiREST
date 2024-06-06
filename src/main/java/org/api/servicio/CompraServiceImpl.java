@@ -35,18 +35,18 @@ public class CompraServiceImpl implements ICompraService{
 
     @Override
     @Transactional
-    public ResponseEntity<Compra> nuevaCompra(Compra compra) {
+    public Compra nuevaCompra(Compra compra) {
         ValidateCompra.validateCompra(compra);
-        return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
+        return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED).getBody();
     }
 
     @Override
     @Transactional
-    public ResponseEntity<Compra> nuevaCompraConPersona(Compra compra, IdValue idPersona) {
+    public Compra nuevaCompraConPersona(Compra compra, IdValue idPersona) {
          Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidCompraException("Couldn't find persona with this id"));
          if (persona.getFecha_baja() == null) {
              ValidateCompraConPersona.validateCompraconPersona(compra);
-             return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED);
+             return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED).getBody();
          }else{
              throw new InvalidCompraException("This person can't sell tickets");
          }

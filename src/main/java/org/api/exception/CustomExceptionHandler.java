@@ -76,4 +76,11 @@ public class CustomExceptionHandler {
         idErrors.put("idError", ex.getMessage());
         return new ResponseEntity<>(idErrors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InvalidRelEventoPersona.class)
+    public ResponseEntity<Map<String, String>> handleInvalidRelEventoPersona(InvalidRelEventoPersona ex) {
+        Map<String, String> relEventoPersonaErrors = new HashMap<>();
+        relEventoPersonaErrors.put("relEventoPersonaError", ex.getMessage());
+        return new ResponseEntity<>(relEventoPersonaErrors, HttpStatus.BAD_REQUEST);
+    }
 }

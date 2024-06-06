@@ -3,7 +3,6 @@ package org.api.web;
 import org.api.Mapper.*;
 import org.api.domain.*;
 import org.api.servicio.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,7 +27,7 @@ public class ControladorREST {
         this.iRelEventoPersonaService = iRelEventoPersonaService;
     }
 
-    @GetMapping("/relEventoPersona/{idEvento}/{idPersona}")
+    @PostMapping("/relEventoPersona/{idEvento}/{idPersona}")
     public void createRelacionEventoPersona(@PathVariable IdValue idEvento, @PathVariable IdValue idPersona){
         iRelEventoPersonaService.createRelEventoPersona(idEvento, idPersona);
     }
@@ -69,12 +68,12 @@ public class ControladorREST {
     }
 
     @PostMapping("/compra/guardar/{idEvento}")
-    public ResponseEntity<Compra> nuevaCompra(@RequestBody CompraDTO compraDTO, @PathVariable IdValue idEvento) {
+    public Compra nuevaCompra(@RequestBody CompraDTO compraDTO, @PathVariable IdValue idEvento) {
         return iCompraService.nuevaCompra(compraMapper.compraDTOToCompra(compraDTO, idEvento));
     }
 
     @PostMapping("/compra/guardar/{idEvento}/{idPersona}")
-    public ResponseEntity<Compra> nuevaCompraConPersona(@RequestBody CompraDTO compraDTO, @PathVariable IdValue idEvento, @PathVariable IdValue idPersona) {
+    public Compra nuevaCompraConPersona(@RequestBody CompraDTO compraDTO, @PathVariable IdValue idEvento, @PathVariable IdValue idPersona) {
         return iCompraService.nuevaCompraConPersona(compraMapper.compraDTOToCompraConPersona(compraDTO, idEvento, idPersona), idPersona);
     }
 

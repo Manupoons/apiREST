@@ -2,7 +2,7 @@ package org.api.servicio;
 
 import org.api.dao.*;
 import org.api.domain.*;
-import org.api.exception.InvalidURLException;
+import org.api.exception.*;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +25,18 @@ public class RelEventoPersonaImpl implements IRelEventoPersonaService{
 
     @Override
     @Transactional
+    public List<RelEventoPersona> listarRelEventoPersonas() {
+        return (List<RelEventoPersona>) iRelEventoPersonaDAO.findAll();
+    }
+    
+    @Override
+    @Transactional
     public void createRelEventoPersona(IdValue idEvento, IdValue idPersona){
-        Evento evento = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("Evento id not found"));
-        Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidURLException("Persona id not found"));
+        Evento evento = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidRelEventoPersona("Evento id not found"));
+        Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidRelEventoPersona("Persona id not found"));
         List<RelEventoPersona> existRelEventoPersona = iRelEventoPersonaDAO.findByEventoIdEventoAndPersonaIdPersona(idEvento.getValue(), idPersona.getValue());
-        if (existRelEventoPersona.isEmpty()){
-            throw new InvalidURLException("Rel evento persona id not found");
+        if (!existRelEventoPersona.isEmpty()){
+            throw new InvalidRelEventoPersona("Relation evento persona already exits");
         }
         RelEventoPersona relEventoPersona = new RelEventoPersona();
         relEventoPersona.setEvento(evento);

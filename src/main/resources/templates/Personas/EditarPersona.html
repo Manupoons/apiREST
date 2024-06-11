@@ -7,7 +7,7 @@
 <body>
 <h1>Editar Persona</h1>
 
-<form th:action="@{/api/persona/guardar}" th:object="${persona}" method="post">
+<form th:action="@{''}" th:object="${persona}" method="post">
     <div>
         <label for="nombrePersona">Nombre Persona</label>
         <input id="nombrePersona" placeholder="Nombre Evento" type="text" th:field="*{nombre_persona}">
@@ -18,7 +18,7 @@
     </div>
     <div>
         <label for="fechaBaja">Fecha Baja</label>
-        <input id="fechaBaja" placeholder="Fecha Baja" type="datetime-local" th:field="*{fecha_baja}">
+        <input id="fechaBaja" placeholder="Fecha Baja" type="date" th:field="*{fecha_baja}">
     </div>
 
     <button>Guardar</button>

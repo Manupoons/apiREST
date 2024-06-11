@@ -3,11 +3,13 @@ package org.api.domain;
 import lombok.Data;
 import org.api.exception.InvalidEditedPersonaException;
 import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 @Data
 public class PersonaEditDTO implements Serializable {
@@ -18,7 +20,8 @@ public class PersonaEditDTO implements Serializable {
 
     private String telefono_persona;
 
-    private LocalDate fecha_baja;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_baja;
 
     public static void validateEditionPersona(Persona persona) {
         if(persona.getNombre_persona() != null){

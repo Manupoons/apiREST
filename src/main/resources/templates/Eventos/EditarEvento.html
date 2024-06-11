@@ -7,14 +7,14 @@
 <body>
 <h1>Editar Evento</h1>
 
-<form th:action="@{/api/evento/guardar}" th:object="${evento}" method="post">
+<form th:action="@{''}" th:object="${evento}" method="post">
     <div>
         <label for="nombreEvento">Nombre Evento</label>
         <input id="nombreEvento" placeholder="Nombre Evento" type="text" th:field="*{nombre_evento}">
     </div>
     <div>
         <label for="horaEvento">Hora Evento</label>
-        <input id="horaEvento" placeholder="Hora Evento" type="time" th:field="*{hora_evento}">
+        <input id="horaEvento" placeholder="Hora Evento" type="text" th:field="*{hora_evento}">
     </div>
     <div>
         <label for="fechaEvento">Fecha Evento</label>

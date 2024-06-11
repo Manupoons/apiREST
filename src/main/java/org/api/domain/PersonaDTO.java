@@ -2,8 +2,10 @@ package org.api.domain;
 
 import lombok.Data;
 import org.api.dao.IPersonaDAO;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 import java.io.Serializable;
 
@@ -20,7 +22,8 @@ public class PersonaDTO implements Serializable {
 
     private String telefono_persona;
 
-    private LocalDate fecha_baja;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_baja;
 
     private Set<RelEventoPersona> relEventoPersonas;
 }

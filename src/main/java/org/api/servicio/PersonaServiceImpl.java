@@ -2,6 +2,7 @@ package org.api.servicio;
 
 import org.api.domain.*;
 import org.api.dao.*;
+import org.api.utils.DateConversionUtil;
 import org.springframework.http.HttpStatus;
 import org.api.validations.ValidatePersona;
 import org.api.exception.InvalidURLException;
@@ -87,6 +88,6 @@ public class PersonaServiceImpl implements IPersonaService {
     public void eliminarPersona(IdValue id) {
         iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
         Persona personaEditada = iPersonaDAO.findByIdPersona(id.getValue());
-        personaEditada.setFecha_baja((LocalDate.now()));
+        personaEditada.setFecha_baja(DateConversionUtil.convertToDateViaSqlDate(LocalDate.now()));
     }
 }

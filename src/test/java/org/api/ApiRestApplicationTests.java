@@ -1,6 +1,5 @@
 package org.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.api.domain.*;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -442,7 +441,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWithInvalidNameFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("º");
+                eventoDTO.setNombre_evento("******");
                 eventoDTO.setEmpresa_evento("cuatroochenta");
                 mockMvc.perform(post("/api/evento/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -844,6 +843,20 @@ class ApiRestApplicationTests {
                         .content(objectMapper.writeValueAsString(relEventoPersona)))
                         .andExpect(status().isBadRequest())
                         .andExpect(jsonPath("$.idError").value("El id debe ser un numero entero"));
+            }
+        }
+
+        @Nested
+        class eliminarRelEventoPersona{
+
+            @Test
+            void assertThatEliminarRelEventoPersonaWithIdRelEventoPersonaNotFoundFails() throws Exception {
+                RelEventoPersona relEventoPersona = new RelEventoPersona();
+                mockMvc.perform(delete("/api/relEventoPersona/{idEventoPersona}", 500)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(relEventoPersona)))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.relEventoPersonaError").value("Persona id not found"));
             }
         }
     }

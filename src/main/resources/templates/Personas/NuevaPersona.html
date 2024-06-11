@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es " xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Persona</title>
+</head>
+<body>
+<h1>Nueva Persona</h1>
+
+<form th:action="@{/api/persona/guardar}" th:object="${persona}" method="post">
+    <div>
+        <label for="nombrePersona">Nombre Persona</label>
+        <input id="nombrePersona" placeholder="Nombre Persona" type="text" th:field="*{nombre_persona}">
+    </div>
+    <div>
+        <label for="correoPersona">Correo Persona</label>
+        <input id="correoPersona" placeholder="Correo Persona" type="email" th:field="*{correo_persona}">
+    </div>
+    <div>
+        <label for="telefonoPersona">Telefono Persona</label>
+        <input id="telefonoPersona" placeholder="Telefono Persona" type="text" th:field="*{telefono_persona}">
+    </div>
+    <div>
+        <label for="fechaBaja">Fecha Baja</label>
+        <input id="fechaBaja" placeholder="Fecha Baja" type="datetime-local" th:field="*{fecha_baja}">
+    </div>
+
+    <button>Guardar</button>
+</form>
+</body>
+</html>

@@ -22,11 +22,9 @@ public class RelEventoPersona implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_evento", nullable = false)
-    @JsonProperty(required = true)
     private Evento evento;
 
     @ManyToOne
     @JoinColumn(name = "id_persona", nullable = false)
-    @JsonProperty(required = true)
     private Persona persona;
 }

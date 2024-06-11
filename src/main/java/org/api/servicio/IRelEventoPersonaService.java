@@ -11,5 +11,5 @@ public interface IRelEventoPersonaService {
 
     void createRelEventoPersona(IdValue idEvento, IdValue idPersona);
 
-
+    void eliminarRelEventoPersona(IdValue id);
 }

@@ -43,4 +43,11 @@ public class RelEventoPersonaImpl implements IRelEventoPersonaService{
         relEventoPersona.setPersona(persona);
         iRelEventoPersonaDAO.save(relEventoPersona);
     }
+
+    @Override
+    @Transactional
+    public void eliminarRelEventoPersona(IdValue id){
+        iRelEventoPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidRelEventoPersona("Persona id not found"));
+        iRelEventoPersonaDAO.deleteByIdEventoPersona(id.getValue());
+    }
 }

@@ -3,6 +3,7 @@ package org.api.domain;
 import lombok.Data;
 import org.api.dao.IPersonaDAO;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.io.Serializable;
 
@@ -19,7 +20,7 @@ public class PersonaDTO implements Serializable {
 
     private String telefono_persona;
 
-    private String fecha_baja;
+    private LocalDate fecha_baja;
 
     private Set<RelEventoPersona> relEventoPersonas;
 }

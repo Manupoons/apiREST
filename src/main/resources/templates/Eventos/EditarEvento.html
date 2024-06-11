@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es " xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Evento</title>
+</head>
+<body>
+<h1>Editar Evento</h1>
+
+<form th:action="@{/api/evento/guardar}" th:object="${evento}" method="post">
+    <div>
+        <label for="nombreEvento">Nombre Evento</label>
+        <input id="nombreEvento" placeholder="Nombre Evento" type="text" th:field="*{nombre_evento}">
+    </div>
+    <div>
+        <label for="horaEvento">Hora Evento</label>
+        <input id="horaEvento" placeholder="Hora Evento" type="time" th:field="*{hora_evento}">
+    </div>
+    <div>
+        <label for="fechaEvento">Fecha Evento</label>
+        <input id="fechaEvento" placeholder="Fecha Evento" type="text" th:field="*{fecha_evento}">
+    </div>
+
+    <button>Guardar</button>
+</form>
+</body>
+</html>

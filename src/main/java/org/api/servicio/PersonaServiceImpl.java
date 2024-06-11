@@ -87,6 +87,6 @@ public class PersonaServiceImpl implements IPersonaService {
     public void eliminarPersona(IdValue id) {
         iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
         Persona personaEditada = iPersonaDAO.findByIdPersona(id.getValue());
-        personaEditada.setFecha_baja(String.valueOf(LocalDate.now()));
+        personaEditada.setFecha_baja((LocalDate.now()));
     }
 }

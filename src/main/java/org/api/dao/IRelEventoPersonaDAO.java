@@ -9,5 +9,5 @@ public interface IRelEventoPersonaDAO extends CrudRepository<RelEventoPersona, L
     List<RelEventoPersona> findByEventoIdEvento(Long idEvento);
     List<RelEventoPersona> findByPersonaIdPersona(Long idPersona);
     List<RelEventoPersona> findByEventoIdEventoAndPersonaIdPersona(Long idEvento, Long idPersona);
-    //RelEventoPersona findByIdEventoPersona(Long id);
+    void deleteByIdEventoPersona(Long id);
 }

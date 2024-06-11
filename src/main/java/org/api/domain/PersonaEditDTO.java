@@ -2,6 +2,7 @@ package org.api.domain;
 
 import lombok.Data;
 import org.api.exception.InvalidEditedPersonaException;
+import org.springframework.cglib.core.Local;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class PersonaEditDTO implements Serializable {
 
     private String telefono_persona;
 
-    private String fecha_baja;
+    private LocalDate fecha_baja;
 
     public static void validateEditionPersona(Persona persona) {
         if(persona.getNombre_persona() != null){
@@ -30,21 +31,6 @@ public class PersonaEditDTO implements Serializable {
             if (!persona.getTelefono_persona().matches("^[0-9]{9}$")) {
                 throw new InvalidEditedPersonaException("The phone number of the person is not valid");
             }
-        }
-
-        if(persona.getFecha_baja() != null){
-            if (!isValidDate(persona.getFecha_baja())){
-                throw new InvalidEditedPersonaException("The date format is not right");
-            }
-        }
-    }
-
-    private static boolean isValidDate(String date){
-        try{
-            LocalDate.parse(date, DATE_FORMATTER);
-            return true;
-        }catch (DateTimeParseException e){
-            return false;
         }
     }
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Personas</title>
+</head>
+<body>
+<h1>Lista de Personas</h1>
+
+<a href="persona/nueva">Nueva Persona</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nombre Persona</th>
+        <th>Correo Persona</th>
+        <th>Telefono Persona</th>
+        <th>Fecha Baja</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="persona : ${personas}" th:object="${persona}">
+        <td th:text="*{nombre_persona}"></td>
+        <td th:text="*{correo_persona}"></td>
+        <td th:text="*{telefono_persona}"></td>
+        <td th:text="*{#temporals.format(fecha_baja, 'dd/MM/YYYY')}"></td>
+        <td>
+            <a th:href="@{/api/persona/editar/{id}(id=*{idPersona})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

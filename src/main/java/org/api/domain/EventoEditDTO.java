@@ -2,12 +2,11 @@ package org.api.domain;
 
 import lombok.Data;
 import org.api.exception.InvalidEditedEventoException;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.regex.Pattern;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 @Data
 public class EventoEditDTO implements Serializable {
@@ -16,9 +15,9 @@ public class EventoEditDTO implements Serializable {
 
     private String hora_evento;
 
-    private String fecha_evento;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_evento;
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
 
     public static void validateEditionEvento(Evento evento) {
@@ -32,21 +31,8 @@ public class EventoEditDTO implements Serializable {
                 throw new InvalidEditedEventoException("Invalid time format. Expected format is HH:mm");
             }
         }
-        if(evento.getFecha_evento() != null){
-            if (!isValidDate(evento.getFecha_evento())){
-                throw new InvalidEditedEventoException("Invalid date format. Expected format is yyyy-MM-dd");
-            }
-        }
     }
 
-    private static boolean isValidDate(String date){
-        try{
-            LocalDate.parse(date, DATE_FORMATTER);
-            return true;
-        }catch (DateTimeParseException e){
-            return false;
-        }
-    }
 
     private static boolean isValidTime(String time) {
         if (time == null) {

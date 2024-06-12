@@ -1,13 +1,8 @@
 package org.api.domain;
 
 
-import com.fasterxml.jackson.databind.DatabindException;
 import lombok.Data;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.io.Serial;
@@ -30,7 +25,6 @@ public class Persona implements Serializable {
 
     private String telefono_persona;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_baja;
 
     @OneToMany(mappedBy = "persona")

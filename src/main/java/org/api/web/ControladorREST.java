@@ -36,9 +36,15 @@ public class ControladorREST {
         this.iRelEventoPersonaService = iRelEventoPersonaService;
     }
 
+    @GetMapping()
+    public ModelAndView index() {
+        return new ModelAndView("Index/index");
+    }
+
     @GetMapping("/compras")
-    public List<Compra> listarCompras() {
-        return iCompraService.listarCompras();
+    public ModelAndView listarCompras() {
+        List<Compra> compras = iCompraService.listarCompras();
+        return new ModelAndView("Compras/Compras").addObject("compras", compras);
     }
 
     @GetMapping("/compras/evento/{idEvento}")
@@ -49,6 +55,11 @@ public class ControladorREST {
     @GetMapping("/compras/persona/{idPersona}")
     public List<Compra> listarComprasPorPersona(@PathVariable IdValue idPersona) {
         return iPersonaService.listadoCompraPorPersona(idPersona);
+    }
+
+    @GetMapping("/compra/nueva")
+    public ModelAndView nuevaCompra() {
+        return new ModelAndView("Compras/Compras").addObject("compra", new Compra());
     }
 
     @PostMapping("/compra/guardar/{idEvento}")
@@ -66,7 +77,7 @@ public class ControladorREST {
         return iCompraService.editarCompra(idCompra, numero_entradas);
     }
 
-    @DeleteMapping("/compra/{idCompra}")
+    @DeleteMapping("/compra/eliminar/{idCompra}")
     public void eliminarCompra(@PathVariable IdValue idCompra) {
         iCompraService.eliminarCompra(idCompra);
     }
@@ -156,7 +167,13 @@ public class ControladorREST {
     //----------------------------------------------------------------------
 
     @GetMapping("/relsEventosPersonas")
-    public List<RelEventoPersona> listarRelacionesEventosPersonas(){
+    public ModelAndView listarRelacionesEventosPersonas(){
+        List<RelEventoPersona> relaciones = iRelEventoPersonaService.listarRelEventoPersonas();
+        return new ModelAndView("Relaciones/Relaciones").addObject("relaciones", relaciones);
+    }
+
+    @GetMapping("/relEventoPersona")
+    public List<RelEventoPersona> listadoRelEventosPersonas() {
         return iRelEventoPersonaService.listarRelEventoPersonas();
     }
 
@@ -165,8 +182,8 @@ public class ControladorREST {
         iRelEventoPersonaService.createRelEventoPersona(idEvento, idPersona);
     }
 
-    @DeleteMapping("/relEventoPersona/{idEventoPersona}")
-    public void eliminarRelEventoPersona(@PathVariable IdValue idEventoPersona){
-        iRelEventoPersonaService.eliminarRelEventoPersona(idEventoPersona);
-    }
+//    @DeleteMapping("/relEventoPersona/{idEventoPersona}")
+//    public void eliminarRelEventoPersona(@PathVariable IdValue idEventoPersona){
+//        iRelEventoPersonaService.eliminarRelEventoPersona(idEventoPersona);
+//    }
 }

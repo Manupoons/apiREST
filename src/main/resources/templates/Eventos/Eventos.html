@@ -12,18 +12,18 @@
 </head>
 <body>
 
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg" style="background-color: #8DFFBF;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" th:href="@{/api}">Inicio</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/api/eventos}">Eventos</a>
+                    <a class="nav-link" th:href="@{/api/personas}">Personas</a>
+                    <a class="nav-link" th:href="@{/api/relsEventosPersonas}">Relaciones</a>
+                    <a class="nav-link" th:href="@{/api/compras}">Compras</a>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 <div class="event-info">
                     <div><strong>Nombre:</strong> <span th:text="*{nombre_evento}"></span></div>
                     <div><strong>Hora:</strong> <span th:text="*{hora_evento}"></span></div>
-                    <div><strong>Fecha:</strong> <span th:text="*{fecha_evento}"></span></div>
+                    <div><strong>Fecha:</strong> <span th:text="*{#dates.format(fecha_evento, 'yyyy-MM-dd')}"></span></div>
                     <div><strong>Empresa Evento:</strong> <span th:text="*{empresa_evento}"></span></div>
                 </div>
                 <div class="event-actions">
@@ -53,6 +53,6 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

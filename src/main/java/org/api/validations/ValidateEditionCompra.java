@@ -1,6 +1,5 @@
 package org.api.validations;
 
-import org.api.domain.Compra;
 import org.api.exception.InvalidEditedCompraException;
 
 public class ValidateEditionCompra {

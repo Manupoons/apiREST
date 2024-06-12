@@ -3,13 +3,8 @@ package org.api.validations;
 import org.api.domain.Compra;
 import org.api.exception.InvalidCompraException;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 public class ValidateCompraConPersona {
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static void validateCompraconPersona(Compra compra) {
 
@@ -34,13 +29,6 @@ public class ValidateCompraConPersona {
 
         if (compra.getFecha_compra() == null) {
             throw new InvalidCompraException("The purchase date can't be null");
-        } else {
-            if (!isValidDate(compra.getFecha_compra())) {
-                throw new InvalidCompraException("Invalid date format. Expected format is yyyy-MM-dd");
-            }
-            if (LocalDate.parse(compra.getFecha_compra(), DATE_FORMATTER).isAfter(LocalDate.now())) {
-                throw new InvalidCompraException("The purchase date can't be in the future");
-            }
         }
 
         if (compra.getIdEvento() == null) {
@@ -51,12 +39,4 @@ public class ValidateCompraConPersona {
         }
     }
 
-    private static boolean isValidDate(String date){
-        try{
-            LocalDate.parse(date, DATE_FORMATTER);
-            return true;
-        }catch (DateTimeParseException e){
-            return false;
-        }
-    }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -22,7 +23,7 @@ public class Compra implements Serializable {
 
     private Integer numero_entradas;
 
-    private String fecha_compra;
+    private Date fecha_compra;
 
     private Long idEvento;
 

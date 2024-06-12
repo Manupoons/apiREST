@@ -48,8 +48,8 @@ public class PersonaServiceImpl implements IPersonaService {
     @Transactional
     public List<Persona> listadoPersonasPorEvento(IdValue idEvento) {
         iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("Evento id not found"));
-        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByEventoIdEvento(idEvento.getValue());
-        List<Long> idsPersona = rels.stream()
+        List<RelEventoPersona> relaciones = iRelEventoPersonaDAO.findByEventoIdEvento(idEvento.getValue());
+        List<Long> idsPersona = relaciones.stream()
                                 .map(rel -> rel.getPersona().getIdPersona())
                                 .collect(Collectors.toList());
         return iPersonaDAO.findAllById(idsPersona);

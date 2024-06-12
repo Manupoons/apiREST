@@ -10,6 +10,4 @@ public interface IRelEventoPersonaService {
     List<RelEventoPersona> listarRelEventoPersonas();
 
     void createRelEventoPersona(IdValue idEvento, IdValue idPersona);
-
-    void eliminarRelEventoPersona(IdValue id);
 }

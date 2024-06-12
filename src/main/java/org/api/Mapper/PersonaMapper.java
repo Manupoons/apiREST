@@ -5,6 +5,8 @@ import org.api.domain.PersonaDTO;
 import org.api.domain.PersonaEditDTO;
 import org.api.validations.ValidatePersona;
 
+import java.text.SimpleDateFormat;
+
 public class PersonaMapper {
 
     public static Persona personaDTOToPersona(PersonaDTO personaDTO) {

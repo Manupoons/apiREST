@@ -1,7 +1,10 @@
 package org.api.domain;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class CompraDTO implements Serializable {
@@ -12,7 +15,8 @@ public class CompraDTO implements Serializable {
 
     private Integer numero_entradas;
 
-    private String fecha_compra;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_compra;
 
     private Long idEvento;
 

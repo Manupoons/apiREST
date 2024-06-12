@@ -1,13 +1,10 @@
 package org.api.validations;
 
-import java.time.format.*;
-import java.time.LocalDate;
 import org.api.domain.Compra;
 import org.api.exception.InvalidCompraException;
 
 public class ValidateCompra {
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public static void validateCompra(Compra compra) {
 
@@ -32,26 +29,10 @@ public class ValidateCompra {
 
         if (compra.getFecha_compra() == null) {
             throw new InvalidCompraException("The purchase date can't be null");
-        } else {
-            if (!isValidDate(compra.getFecha_compra())) {
-                throw new InvalidCompraException("Invalid date format. Expected format is yyyy-MM-dd");
-            }
-            if (LocalDate.parse(compra.getFecha_compra(), DATE_FORMATTER).isAfter(LocalDate.now())) {
-                throw new InvalidCompraException("The purchase date can't be in the future");
-            }
         }
 
         if (compra.getIdEvento() == null) {
             throw new InvalidCompraException("The evento id can't be null");
-        }
-    }
-
-    private static boolean isValidDate(String date){
-        try{
-            LocalDate.parse(date, DATE_FORMATTER);
-            return true;
-        }catch (DateTimeParseException e){
-            return false;
         }
     }
 }

@@ -1,6 +1,9 @@
 package org.api.domain;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 import java.util.Set;
 import java.io.Serializable;
 
@@ -13,7 +16,8 @@ public class EventoDTO implements Serializable {
 
     private String hora_evento;
 
-    private String fecha_evento;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_evento;
 
     private String empresa_evento;
 

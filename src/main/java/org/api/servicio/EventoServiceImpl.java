@@ -46,8 +46,8 @@ public class EventoServiceImpl implements IEventoService{
     @Transactional
     public List<Evento> listadoEventosPorPersona(IdValue idPersona) {
         iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidURLException("Persona id not found"));
-        List<RelEventoPersona> rels = iRelEventoPersonaDAO.findByPersonaIdPersona(idPersona.getValue());
-        List<Long> idsEventos = rels.stream()
+        List<RelEventoPersona> relaciones = iRelEventoPersonaDAO.findByPersonaIdPersona(idPersona.getValue());
+        List<Long> idsEventos = relaciones.stream()
                                 .map(rel -> rel.getEvento().getIdEvento())
                                 .collect(Collectors.toList());
         return iEventoDAO.findAllById(idsEventos);

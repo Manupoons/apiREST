@@ -118,9 +118,10 @@ public class ControladorREST {
         return "redirect:/api/eventos";
     }
 
-    @DeleteMapping("/evento/{idEvento}")
-    public void eliminarEvento(@PathVariable IdValue idEvento) {
+    @GetMapping("/evento/eliminar/{idEvento}")
+    public String eliminarEvento(@PathVariable IdValue idEvento) {
         iEventoService.eliminarEvento(idEvento);
+        return "redirect:/api/eventos";
     }
 
     //----------------------------------------------------------------------
@@ -159,7 +160,7 @@ public class ControladorREST {
         return "redirect:/api/personas";
     }
 
-    @DeleteMapping("/persona/{idPersona}")
+    @DeleteMapping("/persona/eliminar/{idPersona}")
     public void eliminarPersona(@PathVariable IdValue idPersona) {
         iPersonaService.eliminarPersona(idPersona);
     }
@@ -182,8 +183,9 @@ public class ControladorREST {
         iRelEventoPersonaService.createRelEventoPersona(idEvento, idPersona);
     }
 
-//    @DeleteMapping("/relEventoPersona/{idEventoPersona}")
-//    public void eliminarRelEventoPersona(@PathVariable IdValue idEventoPersona){
-//        iRelEventoPersonaService.eliminarRelEventoPersona(idEventoPersona);
-//    }
+    @GetMapping("/relEventoPersona/eliminar/{idEventoPersona}")
+    public String eliminarRelEventoPersona(@PathVariable IdValue idEventoPersona){
+        iRelEventoPersonaService.eliminarRelEventoPersona(idEventoPersona);
+        return "redirect:/api/relsEventosPersonas";
+    }
 }

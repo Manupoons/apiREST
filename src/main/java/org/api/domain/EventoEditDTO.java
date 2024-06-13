@@ -33,7 +33,6 @@ public class EventoEditDTO implements Serializable {
         }
     }
 
-
     private static boolean isValidTime(String time) {
         if (time == null) {
             return false;

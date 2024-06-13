@@ -8,10 +8,15 @@
         .btn-dark{
             background-color: #1f2222;
         }
+        .card-color{
+            background-color: #BDFEFF;
+        }
+        .principal-background{
+            background-color: #f1fdf5;
+        }
     </style>
 </head>
-<body>
-
+<body class="principal-background">
     <nav class="navbar navbar-expand-lg" style="background-color: #8DFFBF;">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/api}">Inicio</a>
@@ -29,26 +34,54 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1>Lista de Eventos</h1>
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            <h2>Eventos</h2>
-            <a class="btn btn-dark" href="evento/nuevo">Nuevo Evento</a>
-        </div>
-        <div class="mt-4" th:each="evento : ${eventos}" th:object="${evento}">
-            <div class="event-card">
-                <div class="event-logo">
-                    480
+    <div class="container" style="max-width: 900px;">
+        <div class="row">
+            <div class="col">
+                <h1>Lista de Eventos</h1>
+                <div class="row">
+                    <div class="col">
+                        <h2>Eventos</h2>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
+                        <a class="btn btn-dark" href="evento/nuevo">Nuevo Evento</a>
+                    </div>
                 </div>
-                <div class="event-info">
-                    <div><strong>Nombre:</strong> <span th:text="*{nombre_evento}"></span></div>
-                    <div><strong>Hora:</strong> <span th:text="*{hora_evento}"></span></div>
-                    <div><strong>Fecha:</strong> <span th:text="*{#dates.format(fecha_evento, 'yyyy-MM-dd')}"></span></div>
-                    <div><strong>Empresa Evento:</strong> <span th:text="*{empresa_evento}"></span></div>
-                </div>
-                <div class="event-actions">
-                    <a class="btn btn-dark" th:href="@{/api/evento/editar/{id}(id=*{idEvento})}">Editar</a>
-                    <a class="btn btn-dark" th:href="@{/api/evento/eliminar/{id}(id=*{idEvento})}">Eliminar</a>
+                <div class="row">
+                    <div class="col">
+                        <div class="card mb-3 card-color" style="border: none;" th:each="evento : ${eventos}" th:object="${evento}">
+                            <div class="row g-0">
+                                <div class="col-2">
+                                    <img src="" alt="Evento Logo">
+                                </div>
+                                <div class="col-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><span th:text="*{nombre_evento}"></span></h5>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="card-body">
+                                        <p class="card-text"><span th:text="*{hora_evento}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="card-body">
+                                        <p class="card-text"><span th:text="*{#dates.format(fecha_evento, 'yyyy-MM-dd')}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="card-body">
+                                        <p class="card-text"><span th:text="*{empresa_evento}"></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <a class="btn btn-dark m-2" th:href="@{/api/evento/editar/{id}(id=*{idEvento})}">Editar</a>
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <a class="btn btn-dark m-2" th:href="@{/api/evento/eliminar/{id}(id=*{idEvento})}">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

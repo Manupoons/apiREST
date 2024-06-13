@@ -9,6 +9,8 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Data
 @Table(name = "evento")
@@ -21,6 +23,7 @@ public class Evento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEvento;
 
+    @NotNull(message = "El nombre no puede estar vacío")
     private String nombre_evento;
 
     private String hora_evento;

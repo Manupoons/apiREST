@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Evento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .btn-dark{
+            background-color: #1f2222;
+        }
+        .principal-background{
+            background-color: #ADBABA;
+        }
+    </style>
 </head>
-<body>
-<h1>Editar Evento</h1>
+<body class="principal-background">
 
-<form th:action="@{''}" th:object="${evento}" method="post">
-    <div>
-        <label for="nombreEvento">Nombre Evento</label>
-        <input id="nombreEvento" placeholder="Nombre Evento" type="text" th:field="*{nombre_evento}">
-    </div>
-    <div>
-        <label for="horaEvento">Hora Evento</label>
-        <input id="horaEvento" placeholder="Hora Evento" type="text" th:field="*{hora_evento}">
-    </div>
-    <div>
-        <label for="fechaEvento">Fecha Evento</label>
-        <input id="fechaEvento" placeholder="Fecha Evento" type="text" th:field="*{fecha_evento}">
-    </div>
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <h1>Editar Evento</h1>
 
-    <button>Guardar</button>
-</form>
+            <form th:action="@{''}" th:object="${evento}" method="post">
+                <div class="mb-4">
+                    <label for="nombreEvento" class="form-label">Nombre Evento</label>
+                    <input id="nombreEvento" class="form-control" placeholder="Nombre Evento" type="text" th:field="*{nombre_evento}">
+                </div>
+                <div class="mb-4">
+                    <label for="horaEvento" class="form-label">Hora Evento</label>
+                    <input id="horaEvento" class="form-control" placeholder="Hora Evento" type="time" th:field="*{hora_evento}">
+                </div>
+                <div class="mb-4">
+                    <label for="fechaEvento" class="form-label">Fecha Evento</label>
+                    <input id="fechaEvento" class="form-control" placeholder="Fecha Evento" type="date" th:field="*{fecha_evento}">
+                </div>
+                <div>
+                    <button class="btn btn-dark">Guardar</button>
+                    <a class="btn btn-dark" href="/api/eventos">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

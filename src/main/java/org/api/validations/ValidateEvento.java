@@ -10,7 +10,7 @@ public class ValidateEvento {
 
     public static void validateEvento(Evento evento) {
 
-        if (evento.getNombre_evento() == null) {
+        if (evento.getNombre_evento() == null || evento.getNombre_evento().isEmpty()) {
             throw new InvalidEventoException("The event name can't be empty");
         } else if (!evento.getNombre_evento().matches("^[\\w\\s@#&!\"'()\\-.,:;]+$")) {
             throw new InvalidEventoException("The event name can only contain letters, certain special characters and spaces");

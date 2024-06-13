@@ -1,8 +1,6 @@
 package org.api.Mapper;
 
-import org.api.domain.Compra;
-import org.api.domain.IdValue;
-import org.api.domain.CompraDTO;
+import org.api.domain.*;
 import org.api.validations.ValidateCompra;
 import org.springframework.stereotype.Component;
 

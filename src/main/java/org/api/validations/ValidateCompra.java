@@ -5,7 +5,6 @@ import org.api.exception.InvalidCompraException;
 
 public class ValidateCompra {
 
-
     public static void validateCompra(Compra compra) {
 
         if (compra.getNombre_cliente() == null) {

@@ -1,8 +1,6 @@
 package org.api.servicio;
 
-import org.api.domain.Compra;
-import org.api.domain.Evento;
-import org.api.domain.IdValue;
+import org.api.domain.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

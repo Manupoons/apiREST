@@ -1,8 +1,6 @@
 package org.api.Mapper;
 
-import org.api.domain.Evento;
-import org.api.domain.EventoDTO;
-import org.api.domain.EventoEditDTO;
+import org.api.domain.*;
 import org.api.validations.ValidateEvento;
 
 public class EventoMapper {

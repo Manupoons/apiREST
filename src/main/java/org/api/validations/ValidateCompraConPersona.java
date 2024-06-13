@@ -5,8 +5,7 @@ import org.api.exception.InvalidCompraException;
 
 public class ValidateCompraConPersona {
 
-
-    public static void validateCompraconPersona(Compra compra) {
+    public static void validateCompraConPersona(Compra compra) {
 
         if (compra.getNombre_cliente() == null) {
             throw new InvalidCompraException("The client name can't be null");
@@ -38,5 +37,4 @@ public class ValidateCompraConPersona {
             throw new InvalidCompraException("The persona id can't be null");
         }
     }
-
 }

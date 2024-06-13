@@ -1,15 +1,13 @@
 package org.api.servicio;
 
-import org.api.domain.*;
 import org.api.dao.*;
-import org.api.validations.ValidateCompra;
-import org.api.validations.ValidateCompraConPersona;
+import org.api.domain.*;
+import org.api.validations.*;
 import org.springframework.http.HttpStatus;
 import org.api.exception.InvalidURLException;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import org.api.exception.InvalidCompraException;
-import org.api.validations.ValidateEditionCompra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +43,7 @@ public class CompraServiceImpl implements ICompraService{
     public Compra nuevaCompraConPersona(Compra compra, IdValue idPersona) {
          Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidCompraException("Couldn't find persona with this id"));
          if (persona.getFecha_baja() == null) {
-             ValidateCompraConPersona.validateCompraconPersona(compra);
+             ValidateCompraConPersona.validateCompraConPersona(compra);
              return new ResponseEntity<>(iCompraDAO.save(compra), HttpStatus.CREATED).getBody();
          }else{
              throw new InvalidCompraException("This person can't sell tickets");

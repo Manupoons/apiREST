@@ -1,11 +1,7 @@
 package org.api.Mapper;
 
-import org.api.domain.Persona;
-import org.api.domain.PersonaDTO;
-import org.api.domain.PersonaEditDTO;
+import org.api.domain.*;
 import org.api.validations.ValidatePersona;
-
-import java.text.SimpleDateFormat;
 
 public class PersonaMapper {
 

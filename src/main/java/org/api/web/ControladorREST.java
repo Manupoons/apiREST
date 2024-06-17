@@ -17,10 +17,10 @@ import java.util.*;
 public class ControladorREST {
 
     private final CompraMapper compraMapper;
-    private final ICompraService iCompraService;
     private final IEventoService iEventoService;
-    private final IEventoDAO iEventoDAO;
+    private final ICompraService iCompraService;
     private final IPersonaService iPersonaService;
+    private final IEventoDAO iEventoDAO;
     private final IPersonaDAO iPersonaDAO;
     private final IRelEventoPersonaService iRelEventoPersonaService;
 

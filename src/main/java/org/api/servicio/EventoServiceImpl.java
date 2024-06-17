@@ -2,6 +2,7 @@ package org.api.servicio;
 
 import org.api.dao.*;
 import org.api.domain.*;
+import org.api.exception.InvalidEventoException;
 import org.api.validations.ValidateEvento;
 import org.springframework.http.HttpStatus;
 import org.api.exception.InvalidURLException;
@@ -57,7 +58,11 @@ public class EventoServiceImpl implements IEventoService{
     @Transactional
     public ResponseEntity<Evento> nuevoEvento(Evento evento) {
         ValidateEvento.validateEvento(evento);
-        return new ResponseEntity<>(iEventoDAO.save(evento), HttpStatus.CREATED);
+        if (iEventoDAO.findBynombre(evento.getNombre()) == null) {
+            return new ResponseEntity<>(iEventoDAO.save(evento), HttpStatus.CREATED);
+        }else {
+            throw new InvalidEventoException("Este Evento ya existe");
+        }
     }
 
     @Override
@@ -66,8 +71,8 @@ public class EventoServiceImpl implements IEventoService{
         EventoEditDTO.validateEditionEvento(evento);
         iEventoDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The evento with this id doesn't exist"));
         Evento eventoEditado = iEventoDAO.findByIdEvento(id.getValue());
-        if (evento.getNombre_evento() != null){
-            eventoEditado.setNombre_evento(evento.getNombre_evento());
+        if (evento.getNombre() != null){
+            eventoEditado.setNombre(evento.getNombre());
         }
         if (evento.getHora_evento() != null) {
             eventoEditado.setHora_evento(evento.getHora_evento());

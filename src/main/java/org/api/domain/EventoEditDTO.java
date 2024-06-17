@@ -4,8 +4,8 @@ import lombok.Data;
 import org.api.exception.InvalidEditedEventoException;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 @Data
@@ -21,8 +21,8 @@ public class EventoEditDTO implements Serializable {
     private static final Pattern TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
 
     public static void validateEditionEvento(Evento evento) {
-        if(evento.getNombre_evento() != null){
-            if (!evento.getNombre_evento().matches("^[\\w\\s@#&!\"'()\\-.,:;]+$")) {
+        if(evento.getNombre() != null){
+            if (!evento.getNombre().matches("^[\\w\\s@#&!\"'()\\-.,:;]+$")) {
                 throw new InvalidEditedEventoException("The event name can only contain letters, certain special characters and spaces");
             }
         }

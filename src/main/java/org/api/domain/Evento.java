@@ -24,7 +24,7 @@ public class Evento implements Serializable {
     private Long idEvento;
 
     @NotNull(message = "El nombre no puede estar vacío")
-    private String nombre_evento;
+    private String nombre;
 
     private String hora_evento;
 

@@ -107,9 +107,10 @@ public class ControladorREST {
     }
 
     @GetMapping("/evento/editar/{idEvento}")
-    public ModelAndView editarEvento(@PathVariable("idEvento") IdValue idEvento){
+    public String editarEvento(@PathVariable("idEvento") IdValue idEvento, Model model){
         Evento eventoEditar = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("The evento with this id doesn't exist"));
-        return new ModelAndView("Eventos/Eventos").addObject("eventoEditar", eventoEditar);
+        model.addAttribute("eventoEditar", eventoEditar);
+        return "Eventos/Eventos";
     }
 
     @PostMapping("/evento/editar/{idEvento}")

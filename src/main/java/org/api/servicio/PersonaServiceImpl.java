@@ -4,8 +4,8 @@ import org.api.dao.*;
 import org.api.domain.*;
 import org.api.utils.DateConversionUtil;
 import org.springframework.http.HttpStatus;
-import org.api.validations.ValidatePersona;
 import org.api.exception.InvalidURLException;
+import org.api.exception.InvalidPersonaException;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +58,11 @@ public class PersonaServiceImpl implements IPersonaService {
     @Override
     @Transactional
     public ResponseEntity<Persona> nuevaPersona(Persona persona) {
-        ValidatePersona.validatePersona(persona);
-        return new ResponseEntity<>(iPersonaDAO.save(persona), HttpStatus.CREATED);
+        if (iPersonaDAO.findByCorreo(persona.getCorreo()) == null) {
+            return new ResponseEntity<>(iPersonaDAO.save(persona), HttpStatus.CREATED);
+        }else {
+            throw new InvalidPersonaException("Esta Persona ya existe");
+        }
     }
 
     @Override
@@ -68,8 +71,8 @@ public class PersonaServiceImpl implements IPersonaService {
         PersonaEditDTO.validateEditionPersona(persona);
         Persona personaEditada;
         personaEditada = iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
-        if (persona.getNombre_persona() != null){
-            personaEditada.setNombre_persona(persona.getNombre_persona());
+        if (persona.getNombre() != null){
+            personaEditada.setNombre(persona.getNombre());
         }
         if (persona.getTelefono_persona() != null){
             personaEditada.setTelefono_persona(persona.getTelefono_persona());

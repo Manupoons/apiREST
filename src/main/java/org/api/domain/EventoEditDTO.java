@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @Data
 public class EventoEditDTO implements Serializable {
 
-    private String nombre_evento;
+    private String nombre;
 
     private String hora_evento;
 

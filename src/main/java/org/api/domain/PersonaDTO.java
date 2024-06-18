@@ -4,7 +4,6 @@ import lombok.Data;
 import org.api.dao.IPersonaDAO;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.io.Serializable;
@@ -16,9 +15,9 @@ public class PersonaDTO implements Serializable {
 
     private Long idPersona;
 
-    private String nombre_persona;
+    private String nombre;
 
-    private String correo_persona;
+    private String correo;
 
     private String telefono_persona;
 

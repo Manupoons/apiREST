@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IEventoDAO extends CrudRepository<Evento, Long> {
     Evento findByIdEvento(Long id);
-    Evento findBynombre(String nome);
+    Evento findByNombre(String nome);
     void deleteByIdEvento(Long id);
     List<Evento> findAllById(Iterable<Long> idsEventos);
 }

@@ -3,7 +3,6 @@ package org.api.domain;
 
 import lombok.Data;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serial;
 import java.io.Serializable;

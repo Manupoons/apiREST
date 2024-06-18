@@ -6,6 +6,7 @@ import org.api.Mapper.*;
 import org.api.servicio.*;
 import org.api.exception.InvalidURLException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ import java.util.*;
 public class ControladorREST {
 
     private final CompraMapper compraMapper;
+    private final IEventoDAO iEventoDAO;
+    private final IPersonaDAO iPersonaDAO;
     private final IEventoService iEventoService;
     private final ICompraService iCompraService;
     private final IPersonaService iPersonaService;
-    private final IEventoDAO iEventoDAO;
-    private final IPersonaDAO iPersonaDAO;
     private final IRelEventoPersonaService iRelEventoPersonaService;
 
     @Autowired
@@ -81,7 +82,7 @@ public class ControladorREST {
         iCompraService.eliminarCompra(idCompra);
     }
 
-    //----------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
 
     @GetMapping("/eventos")
     public ModelAndView listarEventos() {
@@ -89,10 +90,10 @@ public class ControladorREST {
         return new ModelAndView("Eventos/Eventos").addObject("eventos", eventos);
     }
 
-    @GetMapping("/eventos/persona/{idPersona}")
-    public List<Evento> listarEventosPorPersona(@PathVariable IdValue idPersona) {
-        return iEventoService.listadoEventosPorPersona(idPersona);
-    }
+//    @GetMapping("/eventos/persona/{idPersona}")
+//    public List<Evento> listarEventosPorPersona(@PathVariable IdValue idPersona) {
+//        return iEventoService.listadoEventosPorPersona(idPersona);
+//    }
 
     @GetMapping("/evento/nuevo")
     public ModelAndView nuevoEvento() {
@@ -106,15 +107,15 @@ public class ControladorREST {
     }
 
     @GetMapping("/evento/editar/{idEvento}")
-    public ModelAndView editarEvento(@PathVariable IdValue idEvento) {
-        Evento evento = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("The evento with this id doesn't exist"));
-        return new ModelAndView("Eventos/EditarEvento").addObject("evento", evento);
+    public ModelAndView editarEvento(@PathVariable("idEvento") IdValue idEvento){
+        Evento eventoEditar = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("The evento with this id doesn't exist"));
+        return new ModelAndView("Eventos/Eventos").addObject("eventoEditar", eventoEditar);
     }
 
     @PostMapping("/evento/editar/{idEvento}")
     public String editarEvento(@PathVariable IdValue idEvento, EventoEditDTO eventoEditDTO) {
         iEventoService.editarEvento(idEvento, EventoMapper.editionEventoDTOToEvento(eventoEditDTO)).getBody();
-        return "redirect:/api/eventos";
+        return "Eventos/Eventos";
     }
 
     @GetMapping("/evento/eliminar/{idEvento}")
@@ -123,7 +124,7 @@ public class ControladorREST {
         return "redirect:/api/eventos";
     }
 
-    //----------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
 
     @GetMapping("/personas")
     public ModelAndView listarPersonas() {
@@ -164,7 +165,7 @@ public class ControladorREST {
         iPersonaService.eliminarPersona(idPersona);
     }
 
-    //----------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
 
     @GetMapping("/relsEventosPersonas")
     public ModelAndView listarRelacionesEventosPersonas(){

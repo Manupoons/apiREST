@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -57,8 +58,7 @@ public class EventoServiceImpl implements IEventoService{
     @Override
     @Transactional
     public ResponseEntity<Evento> nuevoEvento(Evento evento) {
-        ValidateEvento.validateEvento(evento);
-        if (iEventoDAO.findBynombre(evento.getNombre()) == null) {
+        if (iEventoDAO.findByNombre(evento.getNombre()) == null) {
             return new ResponseEntity<>(iEventoDAO.save(evento), HttpStatus.CREATED);
         }else {
             throw new InvalidEventoException("Este Evento ya existe");

@@ -23,11 +23,11 @@
             <form th:action="@{/api/persona/guardar}" th:object="${persona}" method="post">
                 <div class="mb-4">
                     <label for="nombrePersona" class="form-label">Nombre Persona</label>
-                    <input id="nombrePersona" class="form-control" placeholder="Nombre Persona" type="text" th:field="*{nombre_persona}">
+                    <input id="nombrePersona" class="form-control" placeholder="Nombre Persona" type="text" th:field="*{nombre}">
                 </div>
                 <div class="mb-4">
                     <label for="correoPersona" class="form-label">Correo Persona</label>
-                    <input id="correoPersona" class="form-control" placeholder="Correo Persona" type="time" th:field="*{correo_persona}">
+                    <input id="correoPersona" class="form-control" placeholder="Correo Persona" type="email" th:field="*{correo}">
                 </div>
                 <div class="mb-4">
                     <label for="telefonoPersona" class="form-label">Telefono Persona</label>

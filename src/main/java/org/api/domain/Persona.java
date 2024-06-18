@@ -1,6 +1,5 @@
 package org.api.domain;
 
-
 import lombok.Data;
 import jakarta.persistence.*;
 import java.util.Date;
@@ -19,9 +18,9 @@ public class Persona implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPersona;
 
-    private String nombre_persona;
+    private String nombre;
 
-    private String correo_persona;
+    private String correo;
 
     private String telefono_persona;
 

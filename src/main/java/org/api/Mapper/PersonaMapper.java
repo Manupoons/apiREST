@@ -7,8 +7,8 @@ public class PersonaMapper {
 
     public static Persona personaDTOToPersona(PersonaDTO personaDTO) {
         Persona persona = new Persona();
-        persona.setNombre_persona(personaDTO.getNombre_persona());
-        persona.setCorreo_persona(personaDTO.getCorreo_persona());
+        persona.setNombre(personaDTO.getNombre());
+        persona.setCorreo(personaDTO.getCorreo());
         persona.setTelefono_persona(personaDTO.getTelefono_persona());
         persona.setFecha_baja(personaDTO.getFecha_baja());
         ValidatePersona.validatePersona(persona);
@@ -17,8 +17,8 @@ public class PersonaMapper {
 
     public static Persona editionPersonaDTOToPersona(PersonaEditDTO personaEditDTO) {
         Persona persona = new Persona();
-        if (personaEditDTO.getNombre_persona() != null){
-            persona.setNombre_persona(personaEditDTO.getNombre_persona());
+        if (personaEditDTO.getNombre() != null){
+            persona.setNombre(personaEditDTO.getNombre());
         }
         if (personaEditDTO.getTelefono_persona() != null){
             persona.setTelefono_persona(personaEditDTO.getTelefono_persona());

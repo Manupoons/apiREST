@@ -29,7 +29,6 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/api/eventos}">Eventos</a>
                     <a class="nav-link" th:href="@{/api/personas}">Personas</a>
                     <a class="nav-link" th:href="@{/api/relsEventosPersonas}">Relaciones</a>
-                    <a class="nav-link" th:href="@{/api/compras}">Compras</a>
                 </div>
             </div>
         </div>
@@ -58,12 +57,12 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="card-body">
-                                        <h6 class="card-title"><span th:text="*{evento.nombre_evento}"></span></h6>
+                                        <h6 class="card-title"><span th:text="*{evento.nombre}"></span></h6>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="card-body">
-                                        <p class="card-text"><span th:text="*{persona.nombre_persona}"></span></p>
+                                        <p class="card-text"><span th:text="*{persona.nombre}"></span></p>
                                     </div>
                                 </div>
                                 <div class="col-2 d-flex justify-content-center align-items-center ">

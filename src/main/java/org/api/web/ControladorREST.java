@@ -6,7 +6,6 @@ import org.api.Mapper.*;
 import org.api.servicio.*;
 import org.api.exception.InvalidURLException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,10 +106,9 @@ public class ControladorREST {
     }
 
     @GetMapping("/evento/editar/{idEvento}")
-    public String editarEvento(@PathVariable("idEvento") IdValue idEvento, Model model){
+    public ModelAndView editarEvento(@PathVariable IdValue idEvento){
         Evento eventoEditar = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidURLException("The evento with this id doesn't exist"));
-        model.addAttribute("eventoEditar", eventoEditar);
-        return "Eventos/Eventos";
+        return new ModelAndView("Eventos/EditarEvento").addObject("evento", eventoEditar);
     }
 
     @PostMapping("/evento/editar/{idEvento}")

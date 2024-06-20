@@ -23,15 +23,15 @@
             <form th:action="@{/api/persona/guardar}" th:object="${persona}" method="post">
                 <div class="mb-4">
                     <label for="nombrePersona" class="form-label">Nombre Persona</label>
-                    <input id="nombrePersona" class="form-control" placeholder="Nombre Persona" type="text" th:field="*{nombre}">
+                    <input id="nombrePersona" class="form-control" placeholder="Nombre Persona" type="text" th:field="*{nombre}" required>
                 </div>
                 <div class="mb-4">
                     <label for="correoPersona" class="form-label">Correo Persona</label>
-                    <input id="correoPersona" class="form-control" placeholder="Correo Persona" type="email" th:field="*{correo}">
+                    <input id="correoPersona" class="form-control" placeholder="Correo Persona" type="email" th:field="*{correo}" required>
                 </div>
                 <div class="mb-4">
                     <label for="telefonoPersona" class="form-label">Telefono Persona</label>
-                    <input id="telefonoPersona" class="form-control" placeholder="Telefono Persona" type="text" th:field="*{telefono_persona}">
+                    <input id="telefonoPersona" class="form-control" placeholder="Telefono Persona" type="text" th:field="*{telefono_persona}" required>
                 </div>
                 <div class="mb-4">
                     <label for="fechaBaja" class="form-label">Fecha Baja</label>

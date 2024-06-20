@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Data
 public class PersonaEditDTO implements Serializable {
@@ -18,7 +17,7 @@ public class PersonaEditDTO implements Serializable {
     private String telefono_persona;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_baja;
+    private String fecha_baja;
 
     public static void validateEditionPersona(Persona persona) {
         if(persona.getNombre() != null){

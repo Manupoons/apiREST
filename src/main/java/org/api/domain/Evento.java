@@ -7,8 +7,6 @@ import java.util.Set;
 import java.io.Serial;
 import java.io.Serializable;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -26,10 +24,13 @@ public class Evento implements Serializable {
     @NotNull(message = "El nombre no puede estar vacío")
     private String nombre;
 
+    @NotNull(message = "La hora no puede estar vacía")
     private String hora_evento;
 
-    private Date fecha_evento;
+    @NotNull(message = "La fecha no puede estar vacía")
+    private String fecha_evento;
 
+    @NotNull(message = "El nombre de la empresa no puede estar vacío")
     private String empresa_evento;
 
     @OneToMany(mappedBy = "evento")

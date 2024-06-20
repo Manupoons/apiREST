@@ -23,7 +23,7 @@ public class Compra implements Serializable {
 
     private Integer numero_entradas;
 
-    private Date fecha_compra;
+    private String fecha_compra;
 
     private Long idEvento;
 

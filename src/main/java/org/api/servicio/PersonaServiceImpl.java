@@ -59,6 +59,9 @@ public class PersonaServiceImpl implements IPersonaService {
     @Transactional
     public ResponseEntity<Persona> nuevaPersona(Persona persona) {
         if (iPersonaDAO.findByCorreo(persona.getCorreo()) == null) {
+            if (persona.getFecha_baja() == null || persona.getFecha_baja().isEmpty()){
+                persona.setFecha_baja(null);
+            }
             return new ResponseEntity<>(iPersonaDAO.save(persona), HttpStatus.CREATED);
         }else {
             throw new InvalidPersonaException("Esta Persona ya existe");
@@ -80,7 +83,7 @@ public class PersonaServiceImpl implements IPersonaService {
         if (persona.getFecha_baja() != null){
             personaEditada.setFecha_baja(persona.getFecha_baja());
         }
-        if (persona.getFecha_baja() == null){
+        if (persona.getFecha_baja() == null || persona.getFecha_baja().isEmpty()){
             personaEditada.setFecha_baja(null);
         }
         return new ResponseEntity<>(iPersonaDAO.save(personaEditada), HttpStatus.OK);
@@ -90,7 +93,6 @@ public class PersonaServiceImpl implements IPersonaService {
     @Transactional
     public void eliminarPersona(IdValue id) {
         iPersonaDAO.findById(id.getValue()).orElseThrow(() -> new InvalidURLException("The persona with this id doesn't exist"));
-        Persona personaEditada = iPersonaDAO.findByIdPersona(id.getValue());
-        personaEditada.setFecha_baja(DateConversionUtil.convertToDateViaSqlDate(LocalDate.now()));
+        iPersonaDAO.deleteByIdPersona(id.getValue());
     }
 }

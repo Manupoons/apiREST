@@ -31,10 +31,10 @@ public class RelEventoPersonaImpl implements IRelEventoPersonaService{
     
     @Override
     @Transactional
-    public void createRelEventoPersona(IdValue idEvento, IdValue idPersona){
-        Evento evento = iEventoDAO.findById(idEvento.getValue()).orElseThrow(() -> new InvalidRelEventoPersona("Evento id not found"));
-        Persona persona = iPersonaDAO.findById(idPersona.getValue()).orElseThrow(() -> new InvalidRelEventoPersona("Persona id not found"));
-        List<RelEventoPersona> existRelEventoPersona = iRelEventoPersonaDAO.findByEventoIdEventoAndPersonaIdPersona(idEvento.getValue(), idPersona.getValue());
+    public void createRelEventoPersona(Evento eventoNuevo, Persona personaNueva){
+        Evento evento = iEventoDAO.findById(eventoNuevo.getIdEvento()).orElseThrow(() -> new InvalidRelEventoPersona("Evento id not found"));
+        Persona persona = iPersonaDAO.findById(personaNueva.getIdPersona()).orElseThrow(() -> new InvalidRelEventoPersona("Persona id not found"));
+        List<RelEventoPersona> existRelEventoPersona = iRelEventoPersonaDAO.findByEventoIdEventoAndPersonaIdPersona(evento.getIdEvento(), persona.getIdPersona());
         if (!existRelEventoPersona.isEmpty()){
             throw new InvalidRelEventoPersona("Relation evento persona already exits");
         }

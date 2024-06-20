@@ -16,7 +16,7 @@ public class CompraDTO implements Serializable {
     private Integer numero_entradas;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_compra;
+    private String fecha_compra;
 
     private Long idEvento;
 

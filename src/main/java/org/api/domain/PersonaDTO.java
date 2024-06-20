@@ -4,7 +4,6 @@ import lombok.Data;
 import org.api.dao.IPersonaDAO;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import java.util.Set;
 import java.io.Serializable;
 
@@ -22,7 +21,7 @@ public class PersonaDTO implements Serializable {
     private String telefono_persona;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_baja;
+    private String fecha_baja;
 
     private Set<RelEventoPersona> relEventoPersonas;
 }

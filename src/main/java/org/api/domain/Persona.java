@@ -2,7 +2,6 @@ package org.api.domain;
 
 import lombok.Data;
 import jakarta.persistence.*;
-import java.util.Date;
 import java.util.Set;
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,7 +23,7 @@ public class Persona implements Serializable {
 
     private String telefono_persona;
 
-    private Date fecha_baja;
+    private String fecha_baja;
 
     @OneToMany(mappedBy = "persona")
     private Set<RelEventoPersona> relEventoPersona;

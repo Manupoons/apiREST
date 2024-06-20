@@ -10,7 +10,7 @@
             background-color: #1f2222;
         }
         .principal-background{
-            background-color: #f1fdf5;
+            background-color: #ADBABA;
         }
     </style>
 </head>
@@ -18,28 +18,24 @@
     <div class="container mt-2">
         <div class="row">
             <div class="col-6 offset-3">
-                <h1>Nueva Relacion</h1>
+                <h1 class="mt-5 mb-3" style="font-size: 54px">Nueva Relacion</h1>
 
-                <form th:action="@{/api/evento/guardar}" th:object="${evento}" method="post">
+                <form th:action="@{/api/relEventoPersona/guardar}" th:object="${relacion}" method="post">
                     <div class="mb-4">
-                        <label for="nombreEvento" class="form-label">Nombre Evento</label>
-                        <input id="nombreEvento" class="form-control" placeholder="Nombre Evento" type="text" th:field="*{nombre_evento}">
+                        <label for="idEvento" class="form-label">Evento</label>
+                        <select id="idEvento" class="form-control" th:field="*{evento}">
+                            <option th:each="evento : ${eventos}" th:value="${evento.idEvento}" th:text="${evento.nombre}"></option>
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <label for="horaEvento" class="form-label">Hora Evento</label>
-                        <input id="horaEvento" class="form-control" placeholder="Hora Evento" type="time" th:field="*{hora_evento}">
-                    </div>
-                    <div class="mb-4">
-                        <label for="fechaEvento" class="form-label">Fecha Evento</label>
-                        <input id="fechaEvento" class="form-control" placeholder="Fecha Evento" type="date" th:field="*{fecha_evento}">
-                    </div>
-                    <div class="mb-4">
-                        <label for="empresaEvento" class="form-label">Empresa Evento</label>
-                        <input id="empresaEvento" class="form-control" placeholder="Empresa Evento" type="text" th:field="*{empresa_evento}">
+                        <label for="idPersona" class="form-label">Persona</label>
+                        <select id="idPersona" class="form-control" th:field="*{persona}">
+                            <option th:each="persona : ${personas}" th:value="${persona.idPersona}" th:text="${persona.nombre}"></option>
+                        </select>
                     </div>
                     <div>
-                        <button class="btn btn-dark">Guardar</button>
-                        <a class="btn btn-dark" href="/api/relaciones">Cancelar</a>
+                        <button class="btn btn-dark" style="margin-right: 5px">Guardar</button>
+                        <a class="btn btn-dark" style="margin-left: 5px" href="/api/relsEventosPersonas">Cancelar</a>
                     </div>
                 </form>
             </div>

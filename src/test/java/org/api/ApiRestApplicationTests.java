@@ -429,7 +429,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWithoutNameFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento(null);
+                eventoDTO.setNombre(null);
                 eventoDTO.setEmpresa_evento("cuatroochenta");
                 mockMvc.perform(post("/api/evento/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -441,7 +441,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWithInvalidNameFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("******");
+                eventoDTO.setNombre("******");
                 eventoDTO.setEmpresa_evento("cuatroochenta");
                 mockMvc.perform(post("/api/evento/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -453,7 +453,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWitInvalidTimeFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("Arenal");
+                eventoDTO.setNombre("Arenal");
                 eventoDTO.setHora_evento("64:00");
                 eventoDTO.setEmpresa_evento("cuatroochenta");
                 mockMvc.perform(post("/api/evento/guardar")
@@ -466,7 +466,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWitInvalidDateFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("Arenal");
+                eventoDTO.setNombre("Arenal");
                 eventoDTO.setFecha_evento("20-02-15");
                 eventoDTO.setEmpresa_evento("cuatroochenta");
                 mockMvc.perform(post("/api/evento/guardar")
@@ -479,7 +479,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWithoutEmpresaFails() throws Exception{
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("Estatus");
+                eventoDTO.setNombre("Estatus");
                 eventoDTO.setEmpresa_evento(null);
                 mockMvc.perform(post("/api/evento/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -491,7 +491,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEventoWithInvalidEmpresaFails() throws Exception{
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("Estatus");
+                eventoDTO.setNombre("Estatus");
                 eventoDTO.setEmpresa_evento("ººº");
                 mockMvc.perform(post("/api/evento/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -536,7 +536,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEditionEventoWithInvalidNameFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("*****");
+                eventoDTO.setNombre("*****");
                 mockMvc.perform(put("/api/evento/{idEvento}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(eventoDTO)))
@@ -569,7 +569,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEditionEventoWithIdNotFoundFails() throws Exception {
                 EventoDTO eventoDTO = new EventoDTO();
-                eventoDTO.setNombre_evento("Arenal");
+                eventoDTO.setNombre("Arenal");
                 mockMvc.perform(put("/api/evento/{idEvento}", 2000)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(eventoDTO)))
@@ -600,7 +600,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatPersonaWithoutNameFails() throws Exception {
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setCorreo_persona("mpons@gmail.com");
+                personaDTO.setCorreo("mpons@gmail.com");
                 mockMvc.perform(post("/api/persona/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
@@ -611,8 +611,8 @@ class ApiRestApplicationTests {
             @Test
             void assertThatPersonaWithInvalidNameFails() throws Exception {
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("98");
-                personaDTO.setCorreo_persona("mpons@gmail.com");
+                personaDTO.setNombre("98");
+                personaDTO.setCorreo("mpons@gmail.com");
                 mockMvc.perform(post("/api/persona/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
@@ -623,7 +623,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatPersonaWithoutCorreoFails() throws Exception {
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("Manu");
+                personaDTO.setNombre("Manu");
                 mockMvc.perform(post("/api/persona/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
@@ -634,8 +634,8 @@ class ApiRestApplicationTests {
             @Test
             void assertThatPersonaWithInvalidCorreoFails() throws Exception {
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("Manu");
-                personaDTO.setCorreo_persona("__________");
+                personaDTO.setNombre("Manu");
+                personaDTO.setCorreo("__________");
                 mockMvc.perform(post("/api/persona/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
@@ -646,8 +646,8 @@ class ApiRestApplicationTests {
             @Test
             void assertThatPersonaWithInvalidTelefonoFails() throws Exception {
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("Manu");
-                personaDTO.setCorreo_persona("mpons@gmail.com");
+                personaDTO.setNombre("Manu");
+                personaDTO.setCorreo("mpons@gmail.com");
                 personaDTO.setTelefono_persona("666666666*");
                 mockMvc.perform(post("/api/persona/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -692,7 +692,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEditionPersonaWithInvalidNameFails() throws Exception{
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("------");
+                personaDTO.setNombre("------");
                 mockMvc.perform(put("/api/persona/{idPersona}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
@@ -714,7 +714,7 @@ class ApiRestApplicationTests {
             @Test
             void assertThatEditionPersonaWithIdNotFoundFails() throws Exception{
                 PersonaDTO personaDTO = new PersonaDTO();
-                personaDTO.setNombre_persona("Manu");
+                personaDTO.setNombre("Manu");
                 mockMvc.perform(put("/api/persona/{idPersona}", 2000)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(personaDTO)))
